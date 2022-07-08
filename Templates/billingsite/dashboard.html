@@ -1,0 +1,257 @@
+{% extends "base.html" %}
+{% load static %}
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+	<main class="pt-lg-3 pb-5 pt-0">
+		<div class="bg-light rounded container-fluid container-xl px-md-5 px-sm-3">
+			<div class="pt-md-5 pt-3 mb-1 d-md-flex row">
+				<div class="col text-start d-inline-flex align-items-center">
+					<h1 id="content">Welcome {% if request %}{{ request.user.full_name }}{% else %}Guest{% endif %},</h1>
+				</div>
+				<div class="">
+					<div class="row row-cols-1 row-cols-lg-2">
+			            <div class="col-lg-6 mb-5 stretch-card">
+			              <div class="card tale-bg">
+			                <div class="card-people mt-auto">
+			                  <img src="{% static 'images/dashboard/people.svg' %}" alt="people">
+			                  <div class="weather-info">
+			                    <div class="d-flex">
+			                      <div>
+			                        	<h2 class="mb-0 font-weight-normal">
+			                        		<i class="bi bi-sun me-2"></i>
+			                        		<span>31</span>
+			                        		<sup>C</sup>
+			                       	 	</h2>
+			                      </div>
+			                      <div class="ms-2">
+			                        <h4 class="location font-weight-normal">Bangalore</h4>
+			                        <h6 class="font-weight-normal">India</h6>
+			                      </div>
+			                    </div>
+			                  </div>
+			                </div>
+			              </div>
+			            </div>
+			            <div class="col-lg-6 mb-5 transparent">
+			              <div class="row">
+			                <div class="col-sm-6 mb-2 pe-sm-2 stretch-card transparent">
+			                  <div class="card card-tealish">
+			                    <div class="card-body">
+			                      <p class="mb-3">Today’s Bookings</p>
+			                      <p class="fs-2 mb-1">4006</p>
+			                      <p class="mb-2">10.00% (30 days)</p>
+			                    </div>
+			                  </div>
+			                </div>
+			                <div class="col-sm-6 my-2 mt-sm-0 ps-sm-2 stretch-card transparent">
+			                  <div class="card card-purble">
+			                    <div class="card-body">
+			                      <p class="mb-3">Total Bookings</p>
+			                      <p class="fs-2 mb-1">61344</p>
+			                      <p class="mb-2">22.00% (30 days)</p>
+			                    </div>
+			                  </div>
+			                </div>
+			              </div>
+			              <div class="row">
+			                <div class="col-sm-6 my-2 mb-sm-0 pe-sm-2 stretch-card transparent">
+			                  <div class="card card-purplish">
+			                    <div class="card-body">
+			                      <p class="mb-3">Number of Meetings</p>
+			                      <p class="fs-2 mb-1">34040</p>
+			                      <p class="mb-2">2.00% (30 days)</p>
+			                    </div>
+			                  </div>
+			                </div>
+			                <div class="col-sm-6 mt-2 mb-sm-0 ps-sm-2 stretch-card transparent">
+			                  <div class="card card-reddish">
+			                    <div class="card-body">
+			                      <p class="mb-3">Number of Clients</p>
+			                      <p class="fs-2 mb-1">47033</p>
+			                      <p class="mb-2">0.22% (30 days)</p>
+			                    </div>
+			                  </div>
+			                </div>
+			              </div>
+			            </div>
+			          </div>
+				</div>
+			</div>
+			<div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Striped Table</h4>
+                  <p class="card-description">
+                    Add class <code>.table-striped</code>
+                  </p>
+                  <div class="table-responsive">
+                    <table class="table table-striped">
+                      <thead>
+                        <tr>
+                          <th>
+                            User
+                          </th>
+                          <th>
+                            First name
+                          </th>
+                          <th>
+                            Progress
+                          </th>
+                          <th>
+                            Amount
+                          </th>
+                          <th>
+                            Deadline
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="py-1">
+                            <img src="../../images/faces/face1.jpg" alt="image">
+                          </td>
+                          <td>
+                            Herman Beck
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div class="progress-bar bg-success" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </td>
+                          <td>
+                            $ 77.99
+                          </td>
+                          <td>
+                            May 15, 2015
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="py-1">
+                            <img src="../../images/faces/face2.jpg" alt="image">
+                          </td>
+                          <td>
+                            Messsy Adam
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div class="progress-bar bg-danger" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </td>
+                          <td>
+                            $245.30
+                          </td>
+                          <td>
+                            July 1, 2015
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="py-1">
+                            <img src="../../images/faces/face3.jpg" alt="image">
+                          </td>
+                          <td>
+                            John Richards
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div class="progress-bar bg-warning" role="progressbar" style="width: 90%" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </td>
+                          <td>
+                            $138.00
+                          </td>
+                          <td>
+                            Apr 12, 2015
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="py-1">
+                            <img src="../../images/faces/face4.jpg" alt="image">
+                          </td>
+                          <td>
+                            Peter Meggik
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div class="progress-bar bg-primary" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </td>
+                          <td>
+                            $ 77.99
+                          </td>
+                          <td>
+                            May 15, 2015
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="py-1">
+                            <img src="../../images/faces/face5.jpg" alt="image">
+                          </td>
+                          <td>
+                            Edward
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div class="progress-bar bg-danger" role="progressbar" style="width: 35%" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </td>
+                          <td>
+                            $ 160.25
+                          </td>
+                          <td>
+                            May 03, 2015
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="py-1">
+                            <img src="../../images/faces/face6.jpg" alt="image">
+                          </td>
+                          <td>
+                            John Doe
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div class="progress-bar bg-info" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </td>
+                          <td>
+                            $ 123.21
+                          </td>
+                          <td>
+                            April 05, 2015
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="py-1">
+                            <img src="../../images/faces/face7.jpg" alt="image">
+                          </td>
+                          <td>
+                            Henry Tom
+                          </td>
+                          <td>
+                            <div class="progress">
+                              <div class="progress-bar bg-warning" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+                            </div>
+                          </td>
+                          <td>
+                            $ 150.00
+                          </td>
+                          <td>
+                            June 16, 2015
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+		</div>
+	</main>
+{% endblock %}
+			{% for btn in social %}
+			<div class="d-grid gap-2 col-6 mx-auto my-3">
+  				<button class="btn btn-{{btn}} btn-lg" type="button">{{btn}}</button>
+  				<button class="btn btn-outline-{{btn}} btn-lg" type="button">{{btn}}</button>
+			</div>
+			{% endfor %}

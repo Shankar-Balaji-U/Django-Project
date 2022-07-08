@@ -1,0 +1,303 @@
+// Custom.scss
+// Option B: Include parts of Bootstrap
+
+// 1. Include functions first (so you can manipulate colors, SVGs, calc, etc)
+@import "../../scss/functions";
+
+// 2. Include any default variable overrides here
+@import "scss/variables";
+@import "scss/theme";
+
+// 3. Include remainder of required Bootstrap stylesheets
+@import "../../scss/variables";
+@import "../../scss/mixins";
+@import "../../scss/root";
+
+// 4. Include any optional Bootstrap CSS as needed
+@import "../../scss/utilities";
+@import "../../scss/reboot";
+@import "../../scss/type";
+@import "../../scss/images";
+@import "../../scss/containers";
+@import "../../scss/grid";
+@import "../../scss/helpers";
+
+// 5. Optionally include utilities API last to generate classes based on the Sass map in `_utilities.scss`
+@import "../../scss/utilities/api";
+
+// 6. Add additional custom code here
+// utilities
+@import "scss/utilities";
+// root
+// reboot
+// type
+// images
+// containers
+// grid
+// tables
+@import "scss/tables";
+// forms
+@import "scss/floating-label";
+// buttons
+@import "scss/buttons";
+// transitions
+// dropdown
+// button-group
+// nav
+// navbar
+// card
+// accordion
+// breadcrumb
+// pagination
+// badge
+// alert
+@import "scss/alert";
+// progress
+// list-group
+// close
+// toasts
+// modal
+// tooltip
+// popover
+// carousel
+// spinners
+// offcanvas
+// placeholders
+
+@import "../../scss/bootstrap";
+
+
+// functions
+// variables
+@import "new/variables";
+// mixins
+// utilities
+@import "new/gradients";
+
+// // Layout & components
+// root
+@import "new/root";
+// reboot
+// type
+// images
+// containers
+// grid
+// tables
+// forms
+// buttons
+@import "new/button";
+// transitions
+// dropdown
+// button-group
+// nav
+// navbar
+// card
+@import "new/card";
+// accordion
+// breadcrumb
+// pagination
+// badge
+// alert
+// progress
+// list-group
+// close
+// toasts
+// modal
+// tooltip
+// popover
+// carousel
+// spinners
+// offcanvas
+// placeholders
+// ripple
+@import "new/ripple";
+
+
+// @import "new/forms";
+
+
+// .help-text {
+//     &ul {
+
+//     }
+// }
+
+// .help-text, p.help-text, div.help-text, div.help-text li {
+//     font-size: 11px;
+//     color: #6c757d;
+// }
+
+// div.help-text ul {
+//      margin-bottom: 0;
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// --tw-blur: blur(9px);
+    // filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow);
+
+
+
+
+
+
+
+
+
+
+// $table-hover-blue: rgb(234, 239, 255);
+
+// $component-active-bg:         	$primary !default;
+// $input-bg:               				#ffffff;
+
+// $font-weight-bolder:          	600;
+
+// $form-feedback-margin-top:	  	.1rem;
+
+// $table-cell-padding-y:        	.3rem;
+// $table-hover-bg-factor:      		0;
+// $table-hover-bg:             	  rgba($table-hover-blue, 1);
+
+
+// // $primary:        $indigo-600;
+
+
+
+
+// @import "floting-label";
+// @import "../bootstrap/scss/bootstrap";
+// @import "buttons";
+
+// @include media-breakpoint-down(sm) {
+// 	.cx-bill-table thead th:nth-child(3) {
+// 		width: 13.66667%;
+// 	}
+// 	.cx-bill-table thead th:nth-child(4) {
+// 		width: 10.66667%;
+// 	}
+// 	.cx-bill-table thead th:nth-child(5) {
+// 		width: 16.66667%;
+// 	}
+// 	.cx-bill-table thead th:nth-child(6) {
+// 		width: 16.66667%;
+// 	}
+// 	.cx-bill-table thead th:nth-child(2) {
+// 		flex: 0 0 auto;
+// 		width: 33.33333%!important;
+// 	}
+// 	.form-control-plaintext.form-control {
+// 		padding-right: 0;
+// 		padding-left: 0;
+// 	}
+// 	.form-control {
+// 		min-height: calc(1.5em + 0.5rem + 2px);
+// 		padding: 0.25rem 0.5rem;
+// 		font-size: 0.875rem;
+// 		border-radius: 0.2rem;
+// 	}
+// 	.form-control::file-selector-button {
+// 		padding: 0.25rem 0.5rem;
+// 		margin: -0.25rem -0.5rem;
+// 		margin-inline-end: 0.5rem;
+// 	}
+// 	.form-control::-webkit-file-upload-button {
+// 		padding: 0.25rem 0.5rem;
+// 		margin: -0.25rem -0.5rem;
+// 		margin-inline-end: 0.5rem;
+// 	}
+
+// 	textarea.form-control {
+// 		min-height: calc(1.5em + 0.5rem + 2px);
+// 	}
+// 	.input-group > .form-control,
+// 	.input-group > .form-select,
+// 	.input-group > .input-group-text,
+// 	.input-group > .btn {
+// 		padding: 0.25rem 0.5rem;
+// 		font-size: 0.875rem;
+// 		border-radius: 0.2rem;
+// 	}
+// 	.input-group > .form-select {
+// 		padding-right: 3rem;
+// 	}
+// }
+
+// .bg-purple { background-color: $purple-500;}

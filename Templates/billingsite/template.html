@@ -1,0 +1,12 @@
+<main class="pt-lg-3 pb-5 pt-0">
+	<div class="bg-light rounded container-fluid container-xl px-md-5 px-sm-3">
+		<form method="POST" autocomplete="off">
+			<div class="pt-md-5 pt-4 mb-4 d-md-flex row">
+				{% if form.errors or formset.non_form_errors %}
+					<div class="alert alert-danger" role="alert">Please see below error.</div>
+				{% endif %}
+				<div class="col-auto"><h1 id="content">Add Customer Account</h1></div>
+			</div>
+		</form>
+	</div>
+</main>

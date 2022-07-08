@@ -1,0 +1,10 @@
+::selection
+{
+	$selector-color: shade-color($primary, 50%);
+	color: color-contrast($selector-color);
+	background: $selector-color;
+}
+
+// @each $color, $value in $custom-bg {
+// 		--#{$variable-prefix}#{$color}: #{$value};
+// 	}

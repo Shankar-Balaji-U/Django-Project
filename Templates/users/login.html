@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block css %}
+<style type="text/css">
+	.auth {
+		/*height: calc(var(--header-height) + 1rem);*/
+	}
+	.auth .brand-logo img {
+		width: 30px;
+	}
+	.auth form .btn-link {
+		font-size: 0.875rem;
+	}
+
+	.auth form .form-check {
+		padding-left: 0;
+	}
+
+	.form-check .form-check-label {
+		min-height: 18px;
+		display: block;
+		margin-left: 1.75rem;
+		font-size: 0.875rem;
+		line-height: 1.5;
+	}
+</style>
+{% endblock %}
+
+{% block content %}
+	<main class="p-0 auth d-flex px-3 vh-100">
+		<div class="col col-sm-9 col-md-7 col-lg-5 col-xl-4 m-auto">
+			<div class="bg-light py-5 px-4 px-sm-5 rounded-card">
+				<div class="brand-logo">
+					<img src="{% static 'icons/logo.svg' %}" alt="logo">
+				</div>
+				<h4>Hello! let's get started</h4>
+				<h6 class="fw-light">Sign in to continue.</h6>
+				<form method="POST" class="pt-3" novalidate>{% csrf_token %}
+					<div class="form-floating mb-3">
+						{% if form.username.errors %}
+							{{ form.username|add_class:"is-invalid" }}
+							{% for error in form.username.errors %} 
+								<div class="valid-feedback invalid-feedback">{{ error|escape }}</div>
+							{% endfor %}
+						{% else %}
+							{{ form.username }}
+						{% endif %}
+						<label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+					</div>
+					<div class="form-floating mb-3">
+						{% if form.password.errors %}
+							{{ form.password|add_class:"is-invalid" }}
+							{% for error in form.password.errors %} 
+								<div class="valid-feedback invalid-feedback">{{ error|escape }}</div>
+							{% endfor %}
+						{% else %}
+							{{ form.password }}
+						{% endif %}
+						<label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+					</div>
+					<div class="d-grid gap-2">
+					  <button class="btn btn-primary btn-lg" type="submit">Sign in</button>
+					</div>
+					<div class="my-2 d-flex justify-content-between align-items-center">
+						<div class="form-check">
+							<label class="form-check-label text-muted">
+								<input type="checkbox" class="form-check-input" name="remember_me">
+								Keep me signed in<i class="input-helper"></i>
+							</label>
+						</div>
+						<a href="#" class="btn-link">Forgot password?</a>
+					</div>
+					<div class="d-grid gap-2">
+						<button class="btn btn-outline-facebook btn-lg" type="button">
+							<i class="bi bi-facebook me-2"></i>Connect using facebook
+						</button>
+					</div>
+					<div class="text-center mt-4 fw-light">Don't have an account? 
+						<a href="{% url 'SignUp' %}" class="text-info">Create</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</main>
+{% endblock %}
+{% block jscript %}{% endblock %}
+
+<!-- <button data-bs-ripple-duration="60s" type="button" class="btn btn-primary btn-lg ripple">Duration 10s</button> -->

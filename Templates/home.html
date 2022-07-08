@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+{% block title %}
+<title>Billing Site</title>
+<link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+{% endblock title %}
+
+
+
+{% block content %}
+
+	{% load tz %}
+	<div id="add-bill-container">
+		<a id="add-invoice" class="add-icon" href="{% url 'AddInvoice' %}" role="button">Invoice+</a>
+		<a id="add-instock" class="add-icon" href="{% url 'AddInvoice' %}">Instock+</a>
+	</div>
+	<form method="POST">{% csrf_token %}
+		{{forms.as_p}}
+		<button type="submit" value="create_invoice">submit</button>
+	</form>
+
+{% endblock content %}

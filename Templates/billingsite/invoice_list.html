@@ -1,0 +1,206 @@
+{% extends "base.html" %}
+{% load static %}
+
+
+
+{% block content %}
+	<main class="pt-lg-3 pb-5 pt-0">
+		<form method="POST" class="bg-light rounded-md container-fluid container-xl px-md-5 px-sm-3">
+			{% csrf_token %}
+			<div class="pt-md-5 pt-3 mb-1 d-md-flex row">
+				<div class="col text-start d-inline-flex align-items-center">
+					<h1 id="content">Invoice List</h1>&ensp;
+					<h1 id="content-count">({{ total_invoices }})</h1>
+				</div>
+				<div class="col-12 col-sm-8 col-md-7 col-lg-6 col-xl-5 py-4 ms-sm-auto mt-sm-auto">
+					<div class="input-group">
+						<input type="search" name="search" class="form-control {% if False %}is-invalid{% endif %}" id="search-invoice" placeholder="Enter name or mobile number" value="{{ search_query }}" autocomplete="off">
+						<button type="submit" class="btn btn-blueberry rounded-end" id="search-invoice-btn">
+							<i class="bi bi-arrow-clockwise"></i></button>
+					</div>
+				</div>
+			</div>
+				
+			<!-- Filter options for invoice list table -->
+			<div class="hidden">
+				{% if ordered_by %}
+					<input type="hidden" id="pre-order" value="{{ ordered_by }}" disabled>
+				{% endif %}
+				
+				{% if is_paginated %}
+					<input type="hidden" id="page-no" value="{{ page_obj.number }}" disabled>
+				{% endif %}
+				{% if filtered_by %}
+					{% if filtered_by.name %}
+						<input type="hidden" id="filter-by-name" value="{{ filtered_by.name }}" disabled>
+					{% endif %}
+					{% if filtered_by.date %}
+						<input type="hidden" id="filter-by-date" value="{{ filtered_by.date }}" disabled>
+					{% endif %}
+				{% endif %}
+				<input type="hidden" id="current-url" value="{% url 'InvoiceList' %}" disabled>
+			</div>
+			<div>
+				<div id="filter-toolbar" class="mb-4 p-3 rounded bg-body row">
+					<div class="col">
+						<label>From</label>
+						<input type="month" name="from" class="bg-light form-control">
+					</div>
+					<div class="col">
+						<label>To</label>
+						<input type="month" name="to" class="bg-light form-control">
+					</div>
+				</div>
+			</div>
+			
+			<div class="fixed-button">
+				<a href="{% url 'AddInvoice' %}" class="btn btn-round-lg btn-info" data-bs-toggle="tooltip" data-bs-placement="top" title="New invoice">
+					<i class="bi bi-file-earmark-plus"></i>
+				</a>
+			</div>
+			<div class="table-responsive">
+				<table id="invoicelist-table" class="as-table table table-xl table-hover caption align-middle">
+					<caption>List of users</caption>
+					<thead class="text-light rounded">
+						<tr class="align-middle fs-6">
+							<th scope="col">#</th>
+							<th scope="col">Invoice ID</th>
+							<th scope="col">
+								Customer Name
+								<a id="sort-name" class="link-light" href="{% url 'InvoiceList' %}?ordering=customer_id{% if is_paginated %}&page={{ page_obj.number }}{% endif %}
+								{% if filtered_by %}
+									{% if filtered_by.name %}
+										&by={{ filtered_by.name }}
+									{% elif filtered_by.date %}
+										&on_date={{ filtered_by.date }}
+									{% else %}
+
+									{% endif %}
+								{% endif %}">
+									<i class="fa-solid fa-sort"></i>
+								</a> 
+							</th>
+							<th scope="col">
+								Created Date
+								<a id="sort-date" class="link-light" href="{% url 'InvoiceList' %}?ordering=created_date{% if is_paginated %}&page={{ page_obj.number }}{% endif %}
+								{% if filtered_by %}
+									{% if filtered_by.name %}
+										&by={{ filtered_by.name }}
+									{% elif filtered_by.date %}
+										&on_date={{ filtered_by.date }}
+									{% else %}
+
+									{% endif %}
+								{% endif %}">
+									<i class="fa-solid fa-sort"></i>
+								</a>
+							</th>
+							<th scope="col">Created Time</th>
+							<th scope="col">Amount</th>
+							<th scope="col" colspan="2">
+								<div class="ps-5 d-flex justify-content-between">
+									Delete All
+									<button type="submit" class="btn btn-danger" title="Run the selected action" name="delete-all" value="0">Go</button>
+									<input class="float-end me-2 form-check-input" type="checkbox" id="delete-all">
+								</div>
+
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						
+						{% if object_list %}
+							{% for invoice in object_list %}
+								<tr scope="row" class="form-row">
+									<th>{{ page_obj.start_index|add:forloop.counter0 }}</th>
+									<td class="btn-group-sm"><a href="{% url 'ViewInvoice' invoice.pk %}" class="btn btn-link">{{ invoice.invoice_id }}</a></td>
+									<td class="btn-group-sm"><a href="{% url 'InvoiceList' %}?by={{ invoice.customer_id.raw_mobile_no }}" class="btn btn-link">{{ invoice.customer_id.name }}</a></td>
+									<td>
+										<a href="{% url 'InvoiceList' %}?on_date={{ invoice.created_date|date:'Y-m-d' }}" class="btn btn-link">
+											{{ invoice.created_date|date:'d' }}<small>{{ invoice.created_date|date:'S' }}</small> {{ invoice.created_date|date:'M Y' }}
+										</a>
+									</td>
+									<td>{{ invoice.created_time|time:"h:i A" }}</td>
+									<td>{{ invoice.total_amount }}</td>
+									<td class="btn-group-sm"><a class="btn btn-light btn-sm" href="{% url 'EditInvoice' invoice.pk %}">Modify</a></td>
+									<td class="btn-group-sm delete-option">
+										<button type="button" class="btn btn-primary delete-button" data-bs-toggle="modal" data-object-url="{% url 'DeleteInvoice' invoice.pk %}" data-name="{{ invoice.invoice_id }}">
+											<i class="bi bi-trash"></i>&nbsp;Delete
+										</button>
+									</td>
+								</tr>
+							{% endfor %}
+						{% else %}
+							<tr>
+								<th scope="col" colspan="7">Sorry, there is no record to show.</th>
+							</tr>
+						{% endif %}
+					</tbody>
+				</table>
+			</div>
+			<div class="my-2 py-2 row">
+				<div class="btn-group-sm d-flex align-items-center col-md-4 my-2" style="column-gap: 5px">
+					{% if is_paginated %}
+						{% if page_obj.has_previous %}
+							<a class="btn btn-outline-darkcherry" href="?page=1{% if ordered_by %}&ordering={{ ordered_by }}{% endif %}
+							{% if filtered_by %}
+								{% if filtered_by.name %}&by={{ filtered_by.name }}{% endif %}
+							{% endif %}"><i class="fas fa-solid fa-angle-left"></i></a>
+							<a class="btn btn-outline-darkcherry" href="?page={{ page_obj.previous_page_number }}{% if ordered_by %}&ordering={{ ordered_by }}{% endif %}
+							{% if filtered_by %}
+								{% if filtered_by.name %}&by={{ filtered_by.name }}{% endif %}
+								{% if filtered_by.date %}&on_date={{ filtered_by.date }}{% endif %}
+							{% endif %}"><i class="fas fa-solid fa-angles-left"></i></a>
+						{% endif %}
+
+						{% for num in page_obj.paginator.page_range %}
+							{% if page_obj.number == num %}
+								<a class="btn btn-darkcherry" href="?page={{ num }}{% if ordered_by %}&ordering={{ ordered_by }}{% endif %}
+								{% if filtered_by %}
+									{% if filtered_by.name %}&by={{ filtered_by.name }}{% endif %}
+								{% endif %}">{{ num }}</a>
+							{% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+								<a class="btn btn-outline-darkcherry" href="?page={{ num }}{% if ordered_by %}&ordering={{ ordered_by }}{% endif %}
+								{% if filtered_by %}
+									{% if filtered_by.name %}&by={{ filtered_by.name }}{% endif %}
+									{% if filtered_by.date %}&on_date={{ filtered_by.date }}{% endif %}
+								{% endif %}">{{ num }}</a>
+							{% endif %}
+							{% if num > page_obj.number|add:'-1' and num < page_obj.number|add:'1' %}
+								<span class="text-area fw-lighter my-auto"> of {{ paginator.num_pages }}</span>
+							{% endif %}
+						{% endfor %}
+
+						{% if page_obj.has_next %}
+							<a class="btn btn-outline-darkcherry" href="?page={{ page_obj.next_page_number }}{% if ordered_by %}&ordering={{ ordered_by }}{% endif %}
+							{% if filtered_by %}
+								{% if filtered_by.name %}&by={{ filtered_by.name }}{% endif %}
+							{% endif %}"><i class="fas fa-solid fa-angles-right"></i></a>
+							<a class="btn btn-outline-darkcherry" href="?page={{ page_obj.paginator.num_pages }}{% if ordered_by %}&ordering={{ ordered_by }}{% endif %}
+							{% if filtered_by %}
+								{% if filtered_by.name %}&by={{ filtered_by.name }}{% endif %}
+								{% if filtered_by.date %}&on_date={{ filtered_by.date }}{% endif %}
+							{% endif %}"><i class="fas fa-solid fa-angle-right"></i></a>
+						{% endif %}
+					{% endif %}
+				</div>
+				<div class="col-md-4 offset-md-4 my-2">
+					<select class="form-control">
+						<option>Show 15</option>
+						<option>Show 25</option>
+						<option>Show 50</option>
+						<option>Show 75</option>
+						<option>Show 100</option>
+						<option>Show 200</option>
+					</select>
+				</div>
+			</div>
+		</form>
+ 	<!--Container Main end-->
+	</main>
+{% endblock %}
+{% block jscript %}
+	<script type="text/javascript" src="{% static 'javascript/delete-invoice.js' %}"></script>
+	<script type="text/javascript" src="{% static 'javascript/function.js' %}"></script>
+	<script type="text/javascript" src="{% static 'javascript/actions.js' %}"></script>
+{% endblock %}

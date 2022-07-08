@@ -1,0 +1,210 @@
+{% load static sass_tags %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{% if custom_title %}
+		<title>{{ custom_title }} - Accounts Simply</title>
+	{% else %}
+		<title>Accounts Simply</title>
+	{% endif %}
+
+ 	<link rel="stylesheet" href="{% sass_src 'bootstrap/custom/css/custom.scss' %}">
+	<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous"> -->
+	<!-- <link rel="stylesheet" href="{% sass_src 'css\mdb-4.0.0\src\scss\mdb.free.scss' %}"> -->
+
+	<!-- reference your installed Font Awesome Free package's files here -->
+	<link rel="stylesheet" type="text/css" href="{% static 'fontawesomefree/css/all.min.css' %}">
+	<link rel="stylesheet" href="{% static 'icons/boxicons-2.1.2/css/boxicons.min.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'icons/bootstrap-icons-1.8.0/font/bootstrap-icons.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/fonts.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+	{% block css %}{% endblock %}
+</head>
+{% if not request.user.is_authenticated %}
+<body>
+{% endif %}
+
+{% if request.user.is_authenticated %}
+<body class="custom-body" id="body-pd">
+	<header class="shadow-sm header bg-light" id="header">
+		<div class="header_toggle"><i class="bx bx-menu" id="header-toggle"></i></div>
+		<div class="container-fluid">
+			<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+				<a class="navbar-brand ms-3 me-auto" href="#"><strong class="display-4">Accounts Simply</strong></a>
+				<!-- % if messages %}
+					{% for message in messages %}
+						<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert" style="top:100px">
+							{{ message }}
+							<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+						</div>
+					{% endfor %}			
+				{% endif % -->
+				<div class="d-none d-sm-flex ms-auto justify-content-end">
+					<div id="notification-bar" class="dropdown">
+						<button class="dropdown-toggle btn btn-link btn-outline-light position-relative mx-2" type="button" id="notifications" data-bs-toggle="dropdown" aria-expanded="false" data-bs-auto-close="outside">
+							<i class="bi bi-bell-fill  flag-au"></i>
+							<span id="unreaded" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+								99+
+								<span class="visually-hidden">unread messages</span>
+							</span>
+						</button>
+						<div class="dropdown-menu pt-0 mx-0 rounded-3 shadow overflow-hidden" aria-labelledby="notifications">
+							<div class="navbar-nav-scroll">
+							    <ul class="list-unstyled mb-0">
+									<li>
+										<a href="#" class="list-group-item dropdown-item" data-status="unread">
+											<div class="d-flex align-items-center justify-content-between">
+												<strong class="mb-1">List group item heading</strong>
+												<small class="text-muted">Mon</small>
+											</div>
+											<div class="col-10 mb-1 small text-truncate">Some placeholder content in a paragraph below the heading and date.</div>
+										</a>
+										<div class="notification-option">
+											<button class="dropdown-toggle btn btn-round-sm btn-secondary" type="button" id="notification-option-0" data-bs-toggle="dropdown" aria-expanded="false">
+												<i class="bi bi-three-dots"></i>
+											</button>
+											<ul class="dropdown-menu" aria-labelledby="notification-option-0">
+												<li><a class="dropdown-item" href="#">Action</a></li>
+												<li><a class="dropdown-item" href="#">Another action</a></li>
+												<li><a class="dropdown-item" href="#">Something else here</a></li>
+											</ul>
+										</div>
+										
+									</li>
+									<li>
+										<a href="#" class="list-group-item dropdown-item" data-status="unread">
+											<div class="d-flex align-items-center justify-content-between">
+												<strong class="mb-1">List group item heading</strong>
+												<small class="text-muted">Mon</small>
+											</div>
+											<div class="col-10 mb-1 small text-truncate">Some placeholder content in a paragraph below the heading and date.</div>
+										</a>
+										<div class="notification-option">
+											<button class="dropdown-toggle btn btn-round-sm btn-secondary" type="button" id="notification-option-1" data-bs-toggle="dropdown" aria-expanded="false">
+												<i class="bi bi-three-dots"></i>
+											</button>
+										</div>
+										<ul class="dropdown-menu" aria-labelledby="notification-option-1">
+											<li><a class="dropdown-item" href="#">Action</a></li>
+											<li><a class="dropdown-item" href="#">Another action</a></li>
+											<li><a class="dropdown-item" href="#">Something else here</a></li>
+										</ul>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<a class="btn btn-blank mx-2" href="{% url 'Profile' request.user.pk %}">
+						<i class="bi bi-gear-fill"></i>
+						Settings
+					</a>
+				</div>
+			</div>
+		</div>
+		<div class="header_img"><img src="/media/profile.jpg" alt="" loading="lazy"></div>
+	</header>
+	<div class="navbar-left" id="nav-bar">
+		<span class="mask bg-primary"></span>
+		<nav class="nav d-flex flex-column justify-content-between overflow-hidden h-100">
+			<div>
+				<a href="#" class="nav_logo">
+					<!-- <i class="bx bx-layer "></i> -->
+					 <object class="nav_logo-icon" data="{% static 'icons/logo.svg' %}"></object>
+					 <span class="nav_logo-name">Accounts Simply</span>
+				</a>
+				<div class="nav_list">
+					<a href="{% url 'Dashboard' %}" class="nav_link text-creamy{% if request.resolver_match.view_name == 'InvoiceList' %}active{% endif %}">
+						<!-- <i class="bx bx-grid-alt "></i>  -->
+						<i class="bi bi-layout-text-sidebar-reverse"></i> <span class="nav_name">Dashboard</span>
+					</a>
+					<a href="#" class="nav_link text-creamy">
+						<!-- <i class="bx bx-user nav_icon"></i>  -->
+						<i class="bi bi-person-fill nav_icon"></i> <span class="nav_name">Customer</span>
+					</a>
+					<a href="#" class="nav_link text-creamy">
+						<!-- <i class="bx bx-message-square-detail nav_icon"></i>  -->
+						<i class="bi bi-chat-dots nav_icon"></i> <span class="nav_name">Messages</span>
+					</a>
+					<a href="{% url 'InvoiceList' %}" class="nav_link text-creamy {% if request.resolver_match.view_name == 'InvoiceList' %}active{% endif %}">
+						<i class="bi bi-file-earmark-check nav_icon"></i> <span class="nav_name">Saved Invoice</span>
+					</a>
+					<a href="#" class="nav_link text-creamy">
+						<!-- <i class="bx bx-bar-chart-alt-2 nav_icon"></i> -->
+						<i class="bi bi-graph-up nav_icon"></i> <span class="nav_name">Stats</span>
+					</a>
+				</div>
+			</div>
+			<a href="{% url 'Logout' %}" class="nav_link text-creamy">
+				<!-- <i class="bx bx-log-out nav_icon"></i> -->
+				<i class="bi bi-power nav_icon"></i> <span class="nav_name">Logout</span>
+			</a>
+		</nav>
+	</div>
+	{% endif %}
+
+	{% if messages %}
+		<div class="message-content container-fluid container-xl pt-3 mb-1 row px-1 px-xl-0 mx-auto">
+			{% for message in messages %}
+				<div class="alert alert-{{ message.tags }}" role="alert">
+					<strong>{{ message }}</strong>
+				</div>
+			{% endfor %}
+		</div>
+	{% endif %}
+
+	{% block content %}{% endblock %}
+	<script src="{% static 'bootstrap\custom\js\bootstrap-custom.js' %}"></script>
+	<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2" crossorigin="anonymous"></script> -->
+
+	<script type="text/javascript" src="{% static 'javascript/navbarleft.js' %}"></script>
+	<script type="text/javascript" src="{% static 'javascript/jquery-v3.5.1.js' %}"></script>
+	<script>
+		// $('#unreaded').val(34);
+		// // function WebSocket() {
+		// 	const wsurl = 'ws://' + window.location.host + '/websocket/notify/';
+		// 	const chatSocket = new WebSocket('ws://' + window.location.host + '/websocket/notify/');
+		// 	// ws://127.0.0.1:8000/websocket/notify/
+
+		// 	chatSocket.onmessage = function(e) {
+		// 		const data = JSON.parse(e.data);
+		// 		console.log(data.title);
+		// 		console.log(data.message);
+		// 		var today = new Date()      // year, month, day, hours, minutes, seconds, milliseconds
+		// 		var created_on = new Date(data.created_on);
+		// 		console.log(msTTime(Math.abs(today - created_on)));
+		// 		console.log(today, created_on)
+				
+		// 	};
+		// 	chatSocket.onclose = function(e) {
+		// 		console.error('Chat socket closed unexpectedly');
+		// 	};
+
+			// document.querySelector('#chat-message-submit').onclick = function(e) {
+			// 	const messageInputDom = document.querySelector('#chat-message-input');
+			// 	const message = messageInputDom.value;
+			// 	chatSocket.send(JSON.stringify({
+			// 		'message': message
+			// 	}));
+
+			// 	messageInputDom.value = '';
+			// };
+		// }
+		// WebSocket()
+	</script>
+	<script type="text/javascript" src="{% static 'javascript/base.js' %}"></script>
+	{% block jscript %}{% endblock %}
+</body>
+</html>
+
+<!-- tale -> tealish
+
+dark-blue -> purble
+
+light-blue -> purplish
+
+light-danger -> reddish -->
+
+
+ 

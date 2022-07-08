@@ -1,0 +1,12 @@
+
+@import "../Mixins/card";
+
+@each $name, $value in $custom-colors {
+  .card-#{$name} {
+    @include card-background($value);
+  }
+
+  .card-outline-#{$name} {
+    @include card-outline($value);
+  }
+}

@@ -1,0 +1,132 @@
+
+@import "../Mixins/buttons";
+
+$btn-size-sm:                   2.1rem;
+$btn-size:                      2.7rem;
+$btn-size-lg:                   3.8rem;
+
+
+.btn-round-sm {     //size, line-height, font-size
+  @include button-round($btn-size-sm, $btn-font-size-sm);
+}
+.btn-round {
+  @include button-round($btn-size, $btn-font-size);
+}
+
+.btn-round-lg {
+  @include button-round($btn-size-lg, $btn-font-size-lg);
+}
+
+
+.btn-group-sm > .btn-round { @extend .btn-round-sm; }
+.btn-group-lg > .btn-round { @extend .btn-round-lg; }
+
+
+
+// Social buttons  brand: ($background, $gradiant, $color)
+$social-colors : (
+  facebook: (#1877F2, #ffffff),
+  messenger: (#0099FF, #ffffff),
+  twitter: (#1DA1F2, #ffffff),
+  linkedin: (#0A66C2, #ffffff),
+  skype: (#00AFF0, #ffffff),
+  dropbox: (#0061FF, #ffffff),
+  wordpress: (#21759B, #ffffff),
+  vimeo: (#1AB7EA, #ffffff),
+  slideshare: (#0077B5, #ffffff),
+  vk: (#4C75A3, #ffffff),
+  tumblr: (#34465D, #ffffff),
+  yahoo: (#410093, #ffffff),
+  pinterest: (#BD081C, #ffffff),
+  youtube: (#CD201F, #ffffff),
+  reddit: (#FF5700, #ffffff),
+  quora: (#B92B27, #ffffff),
+  yelp: (#AF0606, #ffffff),
+  weibo: (#DF2029, #ffffff),
+  producthunt: (#DA552F, #ffffff),
+  hackernews: (#FF6600, #000000),
+  soundcloud: (#FF3300, #ffffff),
+  blogger: (#F57D00, #ffffff),
+  snapchat: (#FFFC00, #000000),
+  whatsapp: (#25D366, #ffffff),
+  wechat: (#09B83E, #ffffff),
+  line: (#00C300, #ffffff),
+  medium: (#02B875, #ffffff),
+  vine: (#00B489, #ffffff),
+  slack: (#3AAF85, #ffffff),
+  instagram: (#E4405F, radial-gradient(circle farthest-corner at 35% 90%, #fec564, transparent 50%), radial-gradient(circle farthest-corner at 0 140%, #fec564, transparent 50%), radial-gradient(ellipse farthest-corner at 0 -25%, #5258cf, transparent 50%), radial-gradient(ellipse farthest-corner at 20% -50%, #5258cf, transparent 50%), radial-gradient(ellipse farthest-corner at 100% 0, #893dc2, transparent 50%), radial-gradient(ellipse farthest-corner at 60% -20%, #893dc2, transparent 50%), radial-gradient(ellipse farthest-corner at 100% 100%, #d9317a, transparent), linear-gradient(#6559ca, #bc318f 30%, #e33f5f 50%, #f77638 70%, #fec66d 100%), #ffffff),
+  dribbble: (#EA4C89, #ffffff),
+  flickr: (#FF0084, #ffffff),
+  foursquare: (#F94877, #ffffff),
+  tiktok: (#EE1D51, #ffffff),
+  behance: (#131418, #ffffff)
+);
+
+.btn-outline-btn {
+@include button-variant($primary, $primary);
+@include button-outline-variant($primary);
+}
+
+
+@each $name, $value in $social-colors {
+  $min-contrast-ratio: 2.9;
+  $color: nth($value, 1);
+  .btn-#{$name} {
+    @include button-variant($color, $color);
+  }
+}
+
+@each $name, $value in $social-colors {
+  $min-contrast-ratio: 4.2;
+  $min-contrast-ratio: 1;
+  $color: nth($value, 1);
+  .btn-outline-#{$name} {
+    @include button-outline-variant($color);
+  }
+}
+
+
+// button-variant(
+//   $background,
+//   $color: color-contrast($background),
+//   $hover-background: if($color == $color-contrast-light, shade-color($background, $btn-hover-bg-shade-amount), tint-color($background, $btn-hover-bg-tint-amount)),
+//   $hover-color: color-contrast($hover-background),
+//   $active-background: if($color == $color-contrast-light, shade-color($background, $btn-active-bg-shade-amount), tint-color($background, $btn-active-bg-tint-amount)),
+//   $active-color: color-contrast($active-background),
+//   $disabled-background: $background,
+//   $disabled-color: color-contrast($disabled-background)
+// )
+
+.btn-blank {
+  $color: $primary;
+  $background: color-contrast($color);
+  $hover-background: if($background == $color-contrast-light, shade-color($background, $btn-hover-bg-shade-amount), tint-color($background, $btn-hover-bg-tint-amount));
+  $hover-color: color-contrast($hover-background);
+  $active-background: if($background == $color-contrast-light, shade-color($background, $btn-active-bg-shade-amount), tint-color($background, $btn-active-bg-tint-amount));
+  $active-color: color-contrast($active-background);
+  $disabled-background: $background;
+  $disabled-color: color-contrast($disabled-background);
+
+  color: $color;
+  &:hover, &:focus {
+    color: $hover-color;
+    box-shadow: none !important;
+    @include gradient-bg($hover-background);
+  }
+
+  &:active,
+  &.active,
+  .show > &.dropdown-toggle {
+    color: $active-color;
+    background-color: $active-background;
+    background-image: if($enable-gradients, none, null);
+  }
+
+  &:disabled,
+  &.disabled {
+    color: $disabled-color;
+    background-color: $disabled-background;
+    background-image: if($enable-gradients, none, null);
+  }
+}
+

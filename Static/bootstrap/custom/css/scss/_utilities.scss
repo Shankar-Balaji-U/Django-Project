@@ -1,0 +1,115 @@
+$utilities: map-merge(
+	$utilities, (
+		// Custom class properties
+		"blur": (
+			property: backdrop-filter,
+			class: backdrop-blur,
+			values: (
+				5: blur(5px),
+				10: blur(10px),
+				15: blur(15px),
+				20: blur(20px),
+				25: blur(25px),
+			),
+		),
+		"fixed-width": (
+			property: width,
+			class: fix-width,
+			responsive: true,
+			values: (
+				1: 100px,
+				2: 200px,
+				3: 300px,
+				4: 400px,
+				5: 500px,
+				6: 600px,
+				7: 700px,
+				8: 800px,
+				9: 900px,
+				10: 1000px,
+			),
+		),
+
+		'letter-spacing': (
+			property: letter-spacing,
+			class: char-space,
+			values: (
+				tighter: -0.05em,
+				tight: -0.025em,
+				normal: 0em,
+				wide: 0.025em,
+				wider: 0.05em,
+				widest: 0.1em,
+      		),
+      	),
+
+      	'opacity': (
+      		property: opacity,
+      		values: (
+        		0: 0,
+		        5: 0.05,
+		        10: 0.1,
+		        15: 0.15,
+		        20: 0.2,
+		        25: 0.25,
+		        30: 0.3,
+		        35: 0.35,
+		        40: 0.4,
+		        45: 0.45,
+		        50: 0.5,
+		        55: 0.55,
+		        60: 0.6,
+		        65: 0.65,
+		        70: 0.7,
+		        75: 0.75,
+		        80: 0.8,
+		        85: 0.85,
+		        90: 0.9,
+		        95: 0.95,
+		        100: 1,
+		    ),
+      	),
+   //    	'backdrop-blur': (
+			// property: backdrop-filter,
+			// class: glossy,
+			// values: (
+			// 	1: blur(1px),
+			// 	2: blur(2px),
+			// 	3: blur(3px),
+			// 	4: blur(4px),
+			// 	5: blur(5px),
+   //    		),
+   //    	),
+
+		// Overridding the old properites linear-gradient(180deg, #FFE6BA 20%, #FFE2C8 90%)
+		"border": map-merge(
+			map-get($utilities, "border"), 
+			( responsive: true ),
+		), 
+		"width": map-merge(
+			map-get($utilities, "width"),
+			( responsive: true ), 
+		),
+		
+		"rounded": map-merge(
+			map-get($utilities, "rounded"),
+			( 
+				responsive: true,
+				values: map-merge(
+					map-get(map-get($utilities, "width"), "values"),
+						(card: $border-radius-card),
+				), 
+			),
+		),
+	
+		// "background-color": map-merge(
+		// 	map-get($utilities, "background-color"),
+		// 	(
+		// 		values: map-merge(
+		// 			map-get(map-get($utilities, "width"), "values"),
+		// 			$custom-bg,
+		// 		)
+		// 	), 
+		// ),
+	)
+);

@@ -1,0 +1,76 @@
+// $form-floating-label-transform:   scale(0.8) translateY(-0.6rem) translateX(0.3rem);
+$form-floating-label-transform:   scale(0.8) translateY(-1.3rem) translateX(0.3rem);
+$form-floating-height:            add(2.5rem, $input-height-border);
+$form-floating-label-opacity:     1;
+$form-floating-padding-y:         .45rem;
+$form-floating-input-padding-t:   .625rem;
+$form-floating-transition:        opacity .1s ease-in-out, transform .2s ease-in-out, padding .2s ease-in-out;
+
+$form-floating-label-bg:          url("data:image/svg+xml, <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 10' width='30' height='10' fill='none' stroke='%23dc3545'><rect xmlns='http://www.w3.org/2000/svg' fill='#{$input-bg}' stroke='%23000000' stroke-width='0' stroke-linejoin='round' fill-rule='nonzero' x='0' y='0' height='10' style='color: %23000000;' fill-opacity='1' width='30'/></svg>");
+$form-floating-label-padding-x:   .6rem;
+
+.form-floating {
+  position: relative;
+
+  > .form-control,
+  > .form-select {
+    height: $form-floating-height;
+    line-height: $form-floating-line-height;
+  }
+
+  > label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%; // allow textareas
+    padding: $form-floating-padding-y $form-floating-padding-x;
+    pointer-events: none;
+    border: $input-border-width solid transparent; // Required for aligning label's text with the input as it affects inner box model
+    transform-origin: 0 0;
+    @include transition($form-floating-transition);
+    background: escape-svg($form-floating-label-bg) no-repeat;
+    background-size: contain;
+  }
+
+  // stylelint-disable no-duplicate-selectors
+  > .form-control {
+    padding: $form-floating-padding-y $form-floating-padding-x;
+
+    &::placeholder {
+      color: transparent;
+    }
+
+    &:focus,
+    &:not(:placeholder-shown) {
+      padding-top: $form-floating-input-padding-t;
+      padding-bottom: $form-floating-input-padding-b;
+    }
+    // Duplicated because `:-webkit-autofill` invalidates other selectors when grouped
+    &:-webkit-autofill {
+      padding-top: $form-floating-input-padding-t;
+      padding-bottom: $form-floating-input-padding-b;
+    }
+  }
+
+  > .form-select {
+    padding-top: $form-floating-input-padding-t;
+    padding-bottom: $form-floating-input-padding-b;
+  }
+
+  > .form-control:focus,
+  > .form-control:not(:placeholder-shown),
+  > .form-select {
+    ~ label {
+      padding-right: $form-floating-label-padding-x;
+      padding-left: $form-floating-label-padding-x;
+    }
+  }
+  // Duplicated because `:-webkit-autofill` invalidates other selectors when grouped
+  > .form-control:-webkit-autofill {
+    ~ label {
+      padding-right: $form-floating-label-padding-x;
+      padding-left: $form-floating-label-padding-x;
+    }
+  }
+  // stylelint-enable no-duplicate-selectors
+}

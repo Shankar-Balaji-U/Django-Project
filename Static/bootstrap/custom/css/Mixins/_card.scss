@@ -1,0 +1,24 @@
+@mixin card-background($background) {
+  background: $background;
+  color: color-contrast($background);
+
+  &:hover,
+  &:focus {
+    background: darken($background, 10%);
+  }
+}
+
+@mixin card-outline($background) {
+  background: $white;
+  border-color: $background !important;
+  border-width: 2px !important;
+  border-style: solid !important;
+  color: $background;
+
+  &:hover,
+  &:focus {
+    color: darken($background, 10%);
+    border-color: darken($background, 10%);
+    background: darken($white, 10%);
+  }
+}

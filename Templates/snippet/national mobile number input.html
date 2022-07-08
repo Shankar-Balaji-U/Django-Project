@@ -1,0 +1,1704 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Mobile number input</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+	<style type="text/css" src="js/jquery-3.6.0.js"></style>
+	<style type="text/css">
+		.double-input {
+			width: 100%;
+			padding: 1px;
+			display: inline-flex;
+			border: 1px solid #ced4da;
+			border-radius: 0.25rem;
+			transition: box-shadow .15s ease-in-out;
+		}
+
+		.double-input input {
+			border: 0;
+			outline: 0;
+			display: block;
+			color: #212529;
+			font-size: 1rem;
+			font-weight: 400;
+			line-height: 1.5;
+			appearance: none;
+			-moz-appearance: none;
+			background-color: #fff;
+			-webkit-appearance: none;
+			padding: 0.375rem 0.75rem;
+			background-clip: padding-box;
+			transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+		}
+
+		.double-input input.start {
+			border-top-left-radius: .25rem;
+			border-bottom-left-radius: .25rem;
+		}
+		.double-input input.end {
+			border-top-right-radius: .25rem;
+			border-bottom-right-radius: .25rem;
+		}
+
+		.double-input:focus-within {
+			color: #212529;
+			background-color: #fff;
+			border-color: #86b7fe;
+			box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+		}
+
+
+		fieldset {
+			padding: 0 24px 24px !important;
+		}
+
+		fieldset legend {
+			opacity: 0;
+			padding: 0 8px;
+			width: auto;
+		}
+
+		fieldset:focus-within {
+			border: 1px solid #000;
+		}
+
+		fieldset:focus-within legend {
+			opacity: 1;
+		}
+
+
+
+		input::-webkit-outer-spin-button,
+		input::-webkit-inner-spin-button {
+			-webkit-appearance: none;
+			margin: 0;
+		}
+
+		.double-input .vr {
+			height: 1.5rem;
+			padding: .5px;
+			margin: auto 0px;
+		}
+
+
+	</style>
+</head>
+<body>
+	<div class="container">
+		<div class="form-group p-3 col-6">
+			<label for="mobile-code-selection" class="form-label">Select code</label>
+			<select class="form-select" id="mobile-code-selection" aria-label="Default select example">
+				<!-- Options tag are inserted from JavaScript --> 
+			</select>
+		</div>
+		<div class="form-group p-3 col-6">
+			<label for="mobile-no" class="form-label">Phone Number</label>
+			<div class="double-input rounded">
+				<input class="col-2 start" type="text" name="national-code" id="national-code" placeholder="code">
+				<div class="vr"></div>
+				<input class="col-10 end" type="text" name="mobile-no" id="mobile-no" placeholder="phonenumber">
+			</div>
+		</div>
+		<button class="btn btn-primary" type="button" id="btn">Mobile No</button>	
+	</div>
+	<script id="country_list" type="application/json">
+		[
+			{
+				"name":"Afghanistan",
+				"alpha two":"AF",
+				"alpha three":"AFG",
+				"code":"93"
+			},
+			{
+				"name":"Aland Islands",
+				"alpha two":"AX",
+				"alpha three":"ALA",
+				"code":"358"
+			},
+			{
+				"name":"Albania",
+				"alpha two":"AL",
+				"alpha three":"ALB",
+				"code":"355"
+			},
+			{
+				"name":"Algeria",
+				"alpha two":"DZ",
+				"alpha three":"DZA",
+				"code":"213"
+			},
+			{
+				"name":"American Samoa",
+				"alpha two":"AS",
+				"alpha three":"ASM",
+				"code":"1-684"
+			},
+			{
+				"name":"Andorra",
+				"alpha two":"AD",
+				"alpha three":"AND",
+				"code":"376"
+			},
+			{
+				"name":"Angola",
+				"alpha two":"AO",
+				"alpha three":"AGO",
+				"code":"244"
+			},
+			{
+				"name":"Anguilla",
+				"alpha two":"AI",
+				"alpha three":"AIA",
+				"code":"1-264"
+			},
+			{
+				"name":"Antarctica",
+				"alpha two":"AQ",
+				"alpha three":"ATA",
+				"code":"672"
+			},
+			{
+				"name":"Antigua and Barbuda",
+				"alpha two":"AG",
+				"alpha three":"ATG",
+				"code":"1-268"
+			},
+			{
+				"name":"Argentina",
+				"alpha two":"AR",
+				"alpha three":"ARG",
+				"code":"54"
+			},
+			{
+				"name":"Armenia",
+				"alpha two":"AM",
+				"alpha three":"ARM",
+				"code":"374"
+			},
+			{
+				"name":"Aruba",
+				"alpha two":"AW",
+				"alpha three":"ABW",
+				"code":"297"
+			},
+			{
+				"name":"Australia",
+				"alpha two":"AU",
+				"alpha three":"AUS",
+				"code":"61"
+			},
+			{
+				"name":"Austria",
+				"alpha two":"AT",
+				"alpha three":"AUT",
+				"code":"43"
+			},
+			{
+				"name":"Azerbaijan",
+				"alpha two":"AZ",
+				"alpha three":"AZE",
+				"code":"994"
+			},
+			{
+				"name":"Bahamas",
+				"alpha two":"BS",
+				"alpha three":"BHS",
+				"code":"1-242"
+			},
+			{
+				"name":"Bahrain",
+				"alpha two":"BH",
+				"alpha three":"BHR",
+				"code":"973"
+			},
+			{
+				"name":"Bangladesh",
+				"alpha two":"BD",
+				"alpha three":"BGD",
+				"code":"880"
+			},
+			{
+				"name":"Barbados",
+				"alpha two":"BB",
+				"alpha three":"BRB",
+				"code":"1-246"
+			},
+			{
+				"name":"Belarus",
+				"alpha two":"BY",
+				"alpha three":"BLR",
+				"code":"375"
+			},
+			{
+				"name":"Belgium",
+				"alpha two":"BE",
+				"alpha three":"BEL",
+				"code":"32"
+			},
+			{
+				"name":"Belize",
+				"alpha two":"BZ",
+				"alpha three":"BLZ",
+				"code":"501"
+			},
+			{
+				"name":"Benin",
+				"alpha two":"BJ",
+				"alpha three":"BEN",
+				"code":"229"
+			},
+			{
+				"name":"Bermuda",
+				"alpha two":"BM",
+				"alpha three":"BMU",
+				"code":"1-441"
+			},
+			{
+				"name":"Bhutan",
+				"alpha two":"BT",
+				"alpha three":"BTN",
+				"code":"975"
+			},
+			{
+				"name":"Bolivia",
+				"alpha two":"BO",
+				"alpha three":"BOL",
+				"code":"591"
+			},
+			{
+				"name":"Bosnia and Herzegovina",
+				"alpha two":"BA",
+				"alpha three":"BIH",
+				"code":"387"
+			},
+			{
+				"name":"Botswana",
+				"alpha two":"BW",
+				"alpha three":"BWA",
+				"code":"267"
+			},
+			{
+				"name":"Bouvet Island",
+				"alpha two":"BV",
+				"alpha three":"BVT",
+				"code":"47"
+			},
+			{
+				"name":"Brazil",
+				"alpha two":"BR",
+				"alpha three":"BRA",
+				"code":"55"
+			},
+			{
+				"name":"British Virgin Islands",
+				"alpha two":"VG",
+				"alpha three":"VGB",
+				"code":"1-284"
+			},
+			{
+				"name":"British Indian Ocean Territory",
+				"alpha two":"IO",
+				"alpha three":"IOT",
+				"code":"246"
+			},
+			{
+				"name":"Brunei Darussalam",
+				"alpha two":"BN",
+				"alpha three":"BRN",
+				"code":"673"
+			},
+			{
+				"name":"Bulgaria",
+				"alpha two":"BG",
+				"alpha three":"BGR",
+				"code":"359"
+			},
+			{
+				"name":"Burkina Faso",
+				"alpha two":"BF",
+				"alpha three":"BFA",
+				"code":"226"
+			},
+			{
+				"name":"Burundi",
+				"alpha two":"BI",
+				"alpha three":"BDI",
+				"code":"257"
+			},
+			{
+				"name":"Cambodia",
+				"alpha two":"KH",
+				"alpha three":"KHM",
+				"code":"855"
+			},
+			{
+				"name":"Cameroon",
+				"alpha two":"CM",
+				"alpha three":"CMR",
+				"code":"237"
+			},
+			{
+				"name":"Canada",
+				"alpha two":"CA",
+				"alpha three":"CAN",
+				"code":"1"
+			},
+			{
+				"name":"Cape Verde",
+				"alpha two":"CV",
+				"alpha three":"CPV",
+				"code":"238"
+			},
+			{
+				"name":"Cayman Islands",
+				"alpha two":"KY",
+				"alpha three":"CYM",
+				"code":"1-345"
+			},
+			{
+				"name":"Central African Republic",
+				"alpha two":"CF",
+				"alpha three":"CAF",
+				"code":"236"
+			},
+			{
+				"name":"Chad",
+				"alpha two":"TD",
+				"alpha three":"TCD",
+				"code":"235"
+			},
+			{
+				"name":"Chile",
+				"alpha two":"CL",
+				"alpha three":"CHL",
+				"code":"56"
+			},
+			{
+				"name":"China",
+				"alpha two":"CN",
+				"alpha three":"CHN",
+				"code":"86"
+			},
+			{
+				"name":"Hong Kong, SAR China",
+				"alpha two":"HK",
+				"alpha three":"HKG",
+				"code":"852"
+			},
+			{
+				"name":"Macao, SAR China",
+				"alpha two":"MO",
+				"alpha three":"MAC",
+				"code":"853"
+			},
+			{
+				"name":"Christmas Island",
+				"alpha two":"CX",
+				"alpha three":"CXR",
+				"code":"61"
+			},
+			{
+				"name":"Cocos (Keeling) Islands",
+				"alpha two":"CC",
+				"alpha three":"CCK",
+				"code":"61"
+			},
+			{
+				"name":"Colombia",
+				"alpha two":"CO",
+				"alpha three":"COL",
+				"code":"57"
+			},
+			{
+				"name":"Comoros",
+				"alpha two":"KM",
+				"alpha three":"COM",
+				"code":"269"
+			},
+			{
+				"name":"Congo (Brazzaville)",
+				"alpha two":"CG",
+				"alpha three":"COG",
+				"code":"242"
+			},
+			{
+				"name":"Congo, (Kinshasa)",
+				"alpha two":"CD",
+				"alpha three":"COD",
+				"code":"243"
+			},
+			{
+				"name":"Cook Islands",
+				"alpha two":"CK",
+				"alpha three":"COK",
+				"code":"682"
+			},
+			{
+				"name":"Costa Rica",
+				"alpha two":"CR",
+				"alpha three":"CRI",
+				"code":"506"
+			},
+			{
+				"name":"Côte d'Ivoire",
+				"alpha two":"CI",
+				"alpha three":"CIV",
+				"code":"225"
+			},
+			{
+				"name":"Croatia",
+				"alpha two":"HR",
+				"alpha three":"HRV",
+				"code":"385"
+			},
+			{
+				"name":"Cuba",
+				"alpha two":"CU",
+				"alpha three":"CUB",
+				"code":"53"
+			},
+			{
+				"name":"Cyprus",
+				"alpha two":"CY",
+				"alpha three":"CYP",
+				"code":"357"
+			},
+			{
+				"name":"Czech Republic",
+				"alpha two":"CZ",
+				"alpha three":"CZE",
+				"code":"420"
+			},
+			{
+				"name":"Denmark",
+				"alpha two":"DK",
+				"alpha three":"DNK",
+				"code":"45"
+			},
+			{
+				"name":"Djibouti",
+				"alpha two":"DJ",
+				"alpha three":"DJI",
+				"code":"253"
+			},
+			{
+				"name":"Dominica",
+				"alpha two":"DM",
+				"alpha three":"DMA",
+				"code":"1-767"
+			},
+			{
+				"name":"Dominican Republic",
+				"alpha two":"DO",
+				"alpha three":"DOM",
+				"code":"1-809,1-829,1-849"
+			},
+			{
+				"name":"Ecuador",
+				"alpha two":"EC",
+				"alpha three":"ECU",
+				"code":"593"
+			},
+			{
+				"name":"Egypt",
+				"alpha two":"EG",
+				"alpha three":"EGY",
+				"code":"20"
+			},
+			{
+				"name":"El Salvador",
+				"alpha two":"SV",
+				"alpha three":"SLV",
+				"code":"503"
+			},
+			{
+				"name":"Equatorial Guinea",
+				"alpha two":"GQ",
+				"alpha three":"GNQ",
+				"code":"240"
+			},
+			{
+				"name":"Eritrea",
+				"alpha two":"ER",
+				"alpha three":"ERI",
+				"code":"291"
+			},
+			{
+				"name":"Estonia",
+				"alpha two":"EE",
+				"alpha three":"EST",
+				"code":"372"
+			},
+			{
+				"name":"Ethiopia",
+				"alpha two":"ET",
+				"alpha three":"ETH",
+				"code":"251"
+			},
+			{
+				"name":"Falkland Islands (Malvinas)",
+				"alpha two":"FK",
+				"alpha three":"FLK",
+				"code":"500"
+			},
+			{
+				"name":"Faroe Islands",
+				"alpha two":"FO",
+				"alpha three":"FRO",
+				"code":"298"
+			},
+			{
+				"name":"Fiji",
+				"alpha two":"FJ",
+				"alpha three":"FJI",
+				"code":"679"
+			},
+			{
+				"name":"Finland",
+				"alpha two":"FI",
+				"alpha three":"FIN",
+				"code":"358"
+			},
+			{
+				"name":"France",
+				"alpha two":"FR",
+				"alpha three":"FRA",
+				"code":"33"
+			},
+			{
+				"name":"French Guiana",
+				"alpha two":"GF",
+				"alpha three":"GUF",
+				"code":"594"
+			},
+			{
+				"name":"French Polynesia",
+				"alpha two":"PF",
+				"alpha three":"PYF",
+				"code":"689"
+			},
+			{
+				"name":"French Southern Territories",
+				"alpha two":"TF",
+				"alpha three":"ATF",
+				"code":"262"
+			},
+			{
+				"name":"Gabon",
+				"alpha two":"GA",
+				"alpha three":"GAB",
+				"code":"241"
+			},
+			{
+				"name":"Gambia",
+				"alpha two":"GM",
+				"alpha three":"GMB",
+				"code":"220"
+			},
+			{
+				"name":"Georgia",
+				"alpha two":"GE",
+				"alpha three":"GEO",
+				"code":"995"
+			},
+			{
+				"name":"Germany",
+				"alpha two":"DE",
+				"alpha three":"DEU",
+				"code":"49"
+			},
+			{
+				"name":"Ghana",
+				"alpha two":"GH",
+				"alpha three":"GHA",
+				"code":"233"
+			},
+			{
+				"name":"Gibraltar",
+				"alpha two":"GI",
+				"alpha three":"GIB",
+				"code":"350"
+			},
+			{
+				"name":"Greece",
+				"alpha two":"GR",
+				"alpha three":"GRC",
+				"code":"30"
+			},
+			{
+				"name":"Greenland",
+				"alpha two":"GL",
+				"alpha three":"GRL",
+				"code":"299"
+			},
+			{
+				"name":"Grenada",
+				"alpha two":"GD",
+				"alpha three":"GRD",
+				"code":"1-473"
+			},
+			{
+				"name":"Guadeloupe",
+				"alpha two":"GP",
+				"alpha three":"GLP",
+				"code":"590"
+			},
+			{
+				"name":"Guam",
+				"alpha two":"GU",
+				"alpha three":"GUM",
+				"code":"1-671"
+			},
+			{
+				"name":"Guatemala",
+				"alpha two":"GT",
+				"alpha three":"GTM",
+				"code":"502"
+			},
+			{
+				"name":"Guernsey",
+				"alpha two":"GG",
+				"alpha three":"GGY",
+				"code":"44"
+			},
+			{
+				"name":"Guinea",
+				"alpha two":"GN",
+				"alpha three":"GIN",
+				"code":"224"
+			},
+			{
+				"name":"Guinea-Bissau",
+				"alpha two":"GW",
+				"alpha three":"GNB",
+				"code":"245"
+			},
+			{
+				"name":"Guyana",
+				"alpha two":"GY",
+				"alpha three":"GUY",
+				"code":"592"
+			},
+			{
+				"name":"Haiti",
+				"alpha two":"HT",
+				"alpha three":"HTI",
+				"code":"509"
+			},
+			{
+				"name":"Heard and Mcdonald Islands",
+				"alpha two":"HM",
+				"alpha three":"HMD",
+				"code":"672"
+			},
+			{
+				"name":"Holy See (Vatican City State)",
+				"alpha two":"VA",
+				"alpha three":"VAT",
+				"code":"379"
+			},
+			{
+				"name":"Honduras",
+				"alpha two":"HN",
+				"alpha three":"HND",
+				"code":"504"
+			},
+			{
+				"name":"Hungary",
+				"alpha two":"HU",
+				"alpha three":"HUN",
+				"code":"36"
+			},
+			{
+				"name":"Iceland",
+				"alpha two":"IS",
+				"alpha three":"ISL",
+				"code":"354"
+			},
+			{
+				"name":"India",
+				"alpha two":"IN",
+				"alpha three":"IND",
+				"code":"91"
+			},
+			{
+				"name":"Indonesia",
+				"alpha two":"ID",
+				"alpha three":"IDN",
+				"code":"62"
+			},
+			{
+				"name":"Iran, Islamic Republic of",
+				"alpha two":"IR",
+				"alpha three":"IRN",
+				"code":"98"
+			},
+			{
+				"name":"Iraq",
+				"alpha two":"IQ",
+				"alpha three":"IRQ",
+				"code":"964"
+			},
+			{
+				"name":"Ireland",
+				"alpha two":"IE",
+				"alpha three":"IRL",
+				"code":"353"
+			},
+			{
+				"name":"Isle of Man",
+				"alpha two":"IM",
+				"alpha three":"IMN",
+				"code":"44"
+			},
+			{
+				"name":"Israel",
+				"alpha two":"IL",
+				"alpha three":"ISR",
+				"code":"972"
+			},
+			{
+				"name":"Italy",
+				"alpha two":"IT",
+				"alpha three":"ITA",
+				"code":"39"
+			},
+			{
+				"name":"Jamaica",
+				"alpha two":"JM",
+				"alpha three":"JAM",
+				"code":"1-876"
+			},
+			{
+				"name":"Japan",
+				"alpha two":"JP",
+				"alpha three":"JPN",
+				"code":"81"
+			},
+			{
+				"name":"Jersey",
+				"alpha two":"JE",
+				"alpha three":"JEY",
+				"code":"44"
+			},
+			{
+				"name":"Jordan",
+				"alpha two":"JO",
+				"alpha three":"JOR",
+				"code":"962"
+			},
+			{
+				"name":"Kazakhstan",
+				"alpha two":"KZ",
+				"alpha three":"KAZ",
+				"code":"7"
+			},
+			{
+				"name":"Kenya",
+				"alpha two":"KE",
+				"alpha three":"KEN",
+				"code":"254"
+			},
+			{
+				"name":"Kiribati",
+				"alpha two":"KI",
+				"alpha three":"KIR",
+				"code":"686"
+			},
+			{
+				"name":"Korea (North)",
+				"alpha two":"KP",
+				"alpha three":"PRK",
+				"code":"850"
+			},
+			{
+				"name":"Korea (South)",
+				"alpha two":"KR",
+				"alpha three":"KOR",
+				"code":"82"
+			},
+			{
+				"name":"Kuwait",
+				"alpha two":"KW",
+				"alpha three":"KWT",
+				"code":"965"
+			},
+			{
+				"name":"Kyrgyzstan",
+				"alpha two":"KG",
+				"alpha three":"KGZ",
+				"code":"996"
+			},
+			{
+				"name":"Lao PDR",
+				"alpha two":"LA",
+				"alpha three":"LAO",
+				"code":"856"
+			},
+			{
+				"name":"Latvia",
+				"alpha two":"LV",
+				"alpha three":"LVA",
+				"code":"371"
+			},
+			{
+				"name":"Lebanon",
+				"alpha two":"LB",
+				"alpha three":"LBN",
+				"code":"961"
+			},
+			{
+				"name":"Lesotho",
+				"alpha two":"LS",
+				"alpha three":"LSO",
+				"code":"266"
+			},
+			{
+				"name":"Liberia",
+				"alpha two":"LR",
+				"alpha three":"LBR",
+				"code":"231"
+			},
+			{
+				"name":"Libya",
+				"alpha two":"LY",
+				"alpha three":"LBY",
+				"code":"218"
+			},
+			{
+				"name":"Liechtenstein",
+				"alpha two":"LI",
+				"alpha three":"LIE",
+				"code":"423"
+			},
+			{
+				"name":"Lithuania",
+				"alpha two":"LT",
+				"alpha three":"LTU",
+				"code":"370"
+			},
+			{
+				"name":"Luxembourg",
+				"alpha two":"LU",
+				"alpha three":"LUX",
+				"code":"352"
+			},
+			{
+				"name":"Macedonia, Republic of",
+				"alpha two":"MK",
+				"alpha three":"MKD",
+				"code":"389"
+			},
+			{
+				"name":"Madagascar",
+				"alpha two":"MG",
+				"alpha three":"MDG",
+				"code":"261"
+			},
+			{
+				"name":"Malawi",
+				"alpha two":"MW",
+				"alpha three":"MWI",
+				"code":"265"
+			},
+			{
+				"name":"Malaysia",
+				"alpha two":"MY",
+				"alpha three":"MYS",
+				"code":"60"
+			},
+			{
+				"name":"Maldives",
+				"alpha two":"MV",
+				"alpha three":"MDV",
+				"code":"960"
+			},
+			{
+				"name":"Mali",
+				"alpha two":"ML",
+				"alpha three":"MLI",
+				"code":"223"
+			},
+			{
+				"name":"Malta",
+				"alpha two":"MT",
+				"alpha three":"MLT",
+				"code":"356"
+			},
+			{
+				"name":"Marshall Islands",
+				"alpha two":"MH",
+				"alpha three":"MHL",
+				"code":"692"
+			},
+			{
+				"name":"Martinique",
+				"alpha two":"MQ",
+				"alpha three":"MTQ",
+				"code":"596"
+			},
+			{
+				"name":"Mauritania",
+				"alpha two":"MR",
+				"alpha three":"MRT",
+				"code":"222"
+			},
+			{
+				"name":"Mauritius",
+				"alpha two":"MU",
+				"alpha three":"MUS",
+				"code":"230"
+			},
+			{
+				"name":"Mayotte",
+				"alpha two":"YT",
+				"alpha three":"MYT",
+				"code":"262"
+			},
+			{
+				"name":"Mexico",
+				"alpha two":"MX",
+				"alpha three":"MEX",
+				"code":"52"
+			},
+			{
+				"name":"Micronesia, Federated States of",
+				"alpha two":"FM",
+				"alpha three":"FSM",
+				"code":"691"
+			},
+			{
+				"name":"Moldova, Republic of",
+				"alpha two":"MD",
+				"alpha three":"MDA",
+				"code":"373"
+			},
+			{
+				"name":"Monaco",
+				"alpha two":"MC",
+				"alpha three":"MCO",
+				"code":"377"
+			},
+			{
+				"name":"Mongolia",
+				"alpha two":"MN",
+				"alpha three":"MNG",
+				"code":"976"
+			},
+			{
+				"name":"Montenegro",
+				"alpha two":"ME",
+				"alpha three":"MNE",
+				"code":"382"
+			},
+			{
+				"name":"Montserrat",
+				"alpha two":"MS",
+				"alpha three":"MSR",
+				"code":"1-664"
+			},
+			{
+				"name":"Morocco",
+				"alpha two":"MA",
+				"alpha three":"MAR",
+				"code":"212"
+			},
+			{
+				"name":"Mozambique",
+				"alpha two":"MZ",
+				"alpha three":"MOZ",
+				"code":"258"
+			},
+			{
+				"name":"Myanmar",
+				"alpha two":"MM",
+				"alpha three":"MMR",
+				"code":"95"
+			},
+			{
+				"name":"Namibia",
+				"alpha two":"NA",
+				"alpha three":"NAM",
+				"code":"264"
+			},
+			{
+				"name":"Nauru",
+				"alpha two":"NR",
+				"alpha three":"NRU",
+				"code":"674"
+			},
+			{
+				"name":"Nepal",
+				"alpha two":"NP",
+				"alpha three":"NPL",
+				"code":"977"
+			},
+			{
+				"name":"Netherlands",
+				"alpha two":"NL",
+				"alpha three":"NLD",
+				"code":"31"
+			},
+			{
+				"name":"Netherlands Antilles",
+				"alpha two":"AN",
+				"alpha three":"ANT",
+				"code":"599"
+			},
+			{
+				"name":"New Caledonia",
+				"alpha two":"NC",
+				"alpha three":"NCL",
+				"code":"687"
+			},
+			{
+				"name":"New Zealand",
+				"alpha two":"NZ",
+				"alpha three":"NZL",
+				"code":"64"
+			},
+			{
+				"name":"Nicaragua",
+				"alpha two":"NI",
+				"alpha three":"NIC",
+				"code":"505"
+			},
+			{
+				"name":"Niger",
+				"alpha two":"NE",
+				"alpha three":"NER",
+				"code":"227"
+			},
+			{
+				"name":"Nigeria",
+				"alpha two":"NG",
+				"alpha three":"NGA",
+				"code":"234"
+			},
+			{
+				"name":"Niue",
+				"alpha two":"NU",
+				"alpha three":"NIU",
+				"code":"683"
+			},
+			{
+				"name":"Norfolk Island",
+				"alpha two":"NF",
+				"alpha three":"NFK",
+				"code":"672"
+			},
+			{
+				"name":"Northern Mariana Islands",
+				"alpha two":"MP",
+				"alpha three":"MNP",
+				"code":"1-670"
+			},
+			{
+				"name":"Norway",
+				"alpha two":"NO",
+				"alpha three":"NOR",
+				"code":"47"
+			},
+			{
+				"name":"Oman",
+				"alpha two":"OM",
+				"alpha three":"OMN",
+				"code":"968"
+			},
+			{
+				"name":"Pakistan",
+				"alpha two":"PK",
+				"alpha three":"PAK",
+				"code":"92"
+			},
+			{
+				"name":"Palau",
+				"alpha two":"PW",
+				"alpha three":"PLW",
+				"code":"680"
+			},
+			{
+				"name":"Palestinian Territory",
+				"alpha two":"PS",
+				"alpha three":"PSE",
+				"code":"970"
+			},
+			{
+				"name":"Panama",
+				"alpha two":"PA",
+				"alpha three":"PAN",
+				"code":"507"
+			},
+			{
+				"name":"Papua New Guinea",
+				"alpha two":"PG",
+				"alpha three":"PNG",
+				"code":"675"
+			},
+			{
+				"name":"Paraguay",
+				"alpha two":"PY",
+				"alpha three":"PRY",
+				"code":"595"
+			},
+			{
+				"name":"Peru",
+				"alpha two":"PE",
+				"alpha three":"PER",
+				"code":"51"
+			},
+			{
+				"name":"Philippines",
+				"alpha two":"PH",
+				"alpha three":"PHL",
+				"code":"63"
+			},
+			{
+				"name":"Pitcairn",
+				"alpha two":"PN",
+				"alpha three":"PCN",
+				"code":"870"
+			},
+			{
+				"name":"Poland",
+				"alpha two":"PL",
+				"alpha three":"POL",
+				"code":"48"
+			},
+			{
+				"name":"Portugal",
+				"alpha two":"PT",
+				"alpha three":"PRT",
+				"code":"351"
+			},
+			{
+				"name":"Puerto Rico",
+				"alpha two":"PR",
+				"alpha three":"PRI",
+				"code":"1"
+			},
+			{
+				"name":"Qatar",
+				"alpha two":"QA",
+				"alpha three":"QAT",
+				"code":"974"
+			},
+			{
+				"name":"Réunion",
+				"alpha two":"RE",
+				"alpha three":"REU",
+				"code":"262"
+			},
+			{
+				"name":"Romania",
+				"alpha two":"RO",
+				"alpha three":"ROU",
+				"code":"40"
+			},
+			{
+				"name":"Russian Federation",
+				"alpha two":"RU",
+				"alpha three":"RUS",
+				"code":"7"
+			},
+			{
+				"name":"Rwanda",
+				"alpha two":"RW",
+				"alpha three":"RWA",
+				"code":"250"
+			},
+			{
+				"name":"Saint-Barthélemy",
+				"alpha two":"BL",
+				"alpha three":"BLM",
+				"code":"590"
+			},
+			{
+				"name":"Saint Helena",
+				"alpha two":"SH",
+				"alpha three":"SHN",
+				"code":"290"
+			},
+			{
+				"name":"Saint Kitts and Nevis",
+				"alpha two":"KN",
+				"alpha three":"KNA",
+				"code":"1-869"
+			},
+			{
+				"name":"Saint Lucia",
+				"alpha two":"LC",
+				"alpha three":"LCA",
+				"code":"1-758"
+			},
+			{
+				"name":"Saint-Martin (French)",
+				"alpha two":"MF",
+				"alpha three":"MAF",
+				"code":"590"
+			},
+			{
+				"name":"Saint Pierre and Miquelon",
+				"alpha two":"PM",
+				"alpha three":"SPM",
+				"code":"508"
+			},
+			{
+				"name":"Saint Vincent and Grenadines",
+				"alpha two":"VC",
+				"alpha three":"VCT",
+				"code":"1-784"
+			},
+			{
+				"name":"Samoa",
+				"alpha two":"WS",
+				"alpha three":"WSM",
+				"code":"685"
+			},
+			{
+				"name":"San Marino",
+				"alpha two":"SM",
+				"alpha three":"SMR",
+				"code":"378"
+			},
+			{
+				"name":"Sao Tome and Principe",
+				"alpha two":"ST",
+				"alpha three":"STP",
+				"code":"239"
+			},
+			{
+				"name":"Saudi Arabia",
+				"alpha two":"SA",
+				"alpha three":"SAU",
+				"code":"966"
+			},
+			{
+				"name":"Senegal",
+				"alpha two":"SN",
+				"alpha three":"SEN",
+				"code":"221"
+			},
+			{
+				"name":"Serbia",
+				"alpha two":"RS",
+				"alpha three":"SRB",
+				"code":"381"
+			},
+			{
+				"name":"Seychelles",
+				"alpha two":"SC",
+				"alpha three":"SYC",
+				"code":"248"
+			},
+			{
+				"name":"Sierra Leone",
+				"alpha two":"SL",
+				"alpha three":"SLE",
+				"code":"232"
+			},
+			{
+				"name":"Singapore",
+				"alpha two":"SG",
+				"alpha three":"SGP",
+				"code":"65"
+			},
+			{
+				"name":"Slovakia",
+				"alpha two":"SK",
+				"alpha three":"SVK",
+				"code":"421"
+			},
+			{
+				"name":"Slovenia",
+				"alpha two":"SI",
+				"alpha three":"SVN",
+				"code":"386"
+			},
+			{
+				"name":"Solomon Islands",
+				"alpha two":"SB",
+				"alpha three":"SLB",
+				"code":"677"
+			},
+			{
+				"name":"Somalia",
+				"alpha two":"SO",
+				"alpha three":"SOM",
+				"code":"252"
+			},
+			{
+				"name":"South Africa",
+				"alpha two":"ZA",
+				"alpha three":"ZAF",
+				"code":"27"
+			},
+			{
+				"name":"South Georgia / South Sandwich Islands",
+				"alpha two":"GS",
+				"alpha three":"SGS",
+				"code":"500"
+			},
+			{
+				"name":"South Sudan",
+				"alpha two":"SS",
+				"alpha three":"SSD",
+				"code":"211"
+			},
+			{
+				"name":"Spain",
+				"alpha two":"ES",
+				"alpha three":"ESP",
+				"code":"34"
+			},
+			{
+				"name":"Sri Lanka",
+				"alpha two":"LK",
+				"alpha three":"LKA",
+				"code":"94"
+			},
+			{
+				"name":"Sudan",
+				"alpha two":"SD",
+				"alpha three":"SDN",
+				"code":"249"
+			},
+			{
+				"name":"Suriname",
+				"alpha two":"SR",
+				"alpha three":"SUR",
+				"code":"597"
+			},
+			{
+				"name":"Svalbard and Jan Mayen Islands",
+				"alpha two":"SJ",
+				"alpha three":"SJM",
+				"code":"47"
+			},
+			{
+				"name":"Swaziland",
+				"alpha two":"SZ",
+				"alpha three":"SWZ",
+				"code":"268"
+			},
+			{
+				"name":"Sweden",
+				"alpha two":"SE",
+				"alpha three":"SWE",
+				"code":"46"
+			},
+			{
+				"name":"Switzerland",
+				"alpha two":"CH",
+				"alpha three":"CHE",
+				"code":"41"
+			},
+			{
+				"name":"Syrian Arab Republic (Syria)",
+				"alpha two":"SY",
+				"alpha three":"SYR",
+				"code":"963"
+			},
+			{
+				"name":"Taiwan, Republic of China",
+				"alpha two":"TW",
+				"alpha three":"TWN",
+				"code":"886"
+			},
+			{
+				"name":"Tajikistan",
+				"alpha two":"TJ",
+				"alpha three":"TJK",
+				"code":"992"
+			},
+			{
+				"name":"Tanzania, United Republic of",
+				"alpha two":"TZ",
+				"alpha three":"TZA",
+				"code":"255"
+			},
+			{
+				"name":"Thailand",
+				"alpha two":"TH",
+				"alpha three":"THA",
+				"code":"66"
+			},
+			{
+				"name":"Timor-Leste",
+				"alpha two":"TL",
+				"alpha three":"TLS",
+				"code":"670"
+			},
+			{
+				"name":"Togo",
+				"alpha two":"TG",
+				"alpha three":"TGO",
+				"code":"228"
+			},
+			{
+				"name":"Tokelau",
+				"alpha two":"TK",
+				"alpha three":"TKL",
+				"code":"690"
+			},
+			{
+				"name":"Tonga",
+				"alpha two":"TO",
+				"alpha three":"TON",
+				"code":"676"
+			},
+			{
+				"name":"Trinidad and Tobago",
+				"alpha two":"TT",
+				"alpha three":"TTO",
+				"code":"1-868"
+			},
+			{
+				"name":"Tunisia",
+				"alpha two":"TN",
+				"alpha three":"TUN",
+				"code":"216"
+			},
+			{
+				"name":"Turkey",
+				"alpha two":"TR",
+				"alpha three":"TUR",
+				"code":"90"
+			},
+			{
+				"name":"Turkmenistan",
+				"alpha two":"TM",
+				"alpha three":"TKM",
+				"code":"993"
+			},
+			{
+				"name":"Turks and Caicos Islands",
+				"alpha two":"TC",
+				"alpha three":"TCA",
+				"code":"1-649"
+			},
+			{
+				"name":"Tuvalu",
+				"alpha two":"TV",
+				"alpha three":"TUV",
+				"code":"688"
+			},
+			{
+				"name":"Uganda",
+				"alpha two":"UG",
+				"alpha three":"UGA",
+				"code":"256"
+			},
+			{
+				"name":"Ukraine",
+				"alpha two":"UA",
+				"alpha three":"UKR",
+				"code":"380"
+			},
+			{
+				"name":"United Arab Emirates",
+				"alpha two":"AE",
+				"alpha three":"ARE",
+				"code":"971"
+			},
+			{
+				"name":"United Kingdom",
+				"alpha two":"GB",
+				"alpha three":"GBR",
+				"code":"44"
+			},
+			{
+				"name":"United States of America",
+				"alpha two":"US",
+				"alpha three":"USA",
+				"code":"1"
+			},
+			{
+				"name":"US Minor Outlying Islands",
+				"alpha two":"UM",
+				"alpha three":"UMI",
+				"code":"1"
+			},
+			{
+				"name":"Uruguay",
+				"alpha two":"UY",
+				"alpha three":"URY",
+				"code":"598"
+			},
+			{
+				"name":"Uzbekistan",
+				"alpha two":"UZ",
+				"alpha three":"UZB",
+				"code":"998"
+			},
+			{
+				"name":"Vanuatu",
+				"alpha two":"VU",
+				"alpha three":"VUT",
+				"code":"678"
+			},
+			{
+				"name":"Venezuela (Bolivarian Republic)",
+				"alpha two":"VE",
+				"alpha three":"VEN",
+				"code":"58"
+			},
+			{
+				"name":"Viet Nam",
+				"alpha two":"VN",
+				"alpha three":"VNM",
+				"code":"84"
+			},
+			{
+				"name":"Virgin Islands, US",
+				"alpha two":"VI",
+				"alpha three":"VIR",
+				"code":"1-340"
+			},
+			{
+				"name":"Wallis and Futuna Islands",
+				"alpha two":"WF",
+				"alpha three":"WLF",
+				"code":"681"
+			},
+			{
+				"name":"Western Sahara",
+				"alpha two":"EH",
+				"alpha three":"ESH",
+				"code":"212"
+			},
+			{
+				"name":"Yemen",
+				"alpha two":"YE",
+				"alpha three":"YEM",
+				"code":"967"
+			},
+			{
+				"name":"Zambia",
+				"alpha two":"ZM",
+				"alpha three":"ZMB",
+				"code":"260"
+			},
+			{
+				"name":"Zimbabwe",
+				"alpha two":"ZW",
+				"alpha three":"ZWE",
+				"code":"263"
+			}
+		]
+	</script>
+
+	<script type="text/javascript">
+		const json_data = JSON.parse(document.getElementById("country_list").textContent),
+		dropList = document.getElementById("mobile-code-selection"),
+		nativeCode = document.getElementById("national-code"),
+		mobileNo = document.getElementById("mobile-no"),
+		btn = document.getElementById("btn");
+
+
+		for(let index in json_data) {
+			let name = json_data[index]["name"],
+			alpha2 = json_data[index]["alpha two"],
+			alpha3 = json_data[index]["alpha three"],
+			code = json_data[index]["code"],
+
+			optionTag = new Option(name, code);
+			dropList.add(optionTag);
+		}
+		// console.log(json_data.length)
+		dropList.addEventListener("change", () => {
+			nativeCode.value = this.value;
+		});
+
+		window.load = () => alert("Hi");
+
+		nativeCode.addEventListener("keyup", () => {
+			dropList.value = this.value;
+		});
+
+		btn.addEventListener("click", () => {
+			alert("+" + nativeCode.value + mobileNo.value);
+		});
+	</script>
+</body>
+</html>
+
+
+
+
+
+<!--
+
+<script type="text/javascript">
+	const dropList = document.querySelectorAll("form select"),
+		fromCurrency = document.querySelector(".from select"),
+		toCurrency = document.querySelector(".to select"),
+		getButton = document.querySelector("form button");
+
+for (let i = 0; i < dropList.length; i++) {
+	for(let currency_code in country_list){
+		// selecting USD by default as FROM currency and NPR as TO currency
+		let selected = i == 0 ? currency_code == "USD" ? "selected" : "" : currency_code == "NPR" ? "selected" : "";
+		// creating option tag with passing currency code as a text and value
+		let optionTag = `<option value="${currency_code}" ${selected}>${currency_code}</option>`;
+		// inserting options tag inside select tag
+		dropList[i].insertAdjacentHTML("beforeend", optionTag);
+	}
+	dropList[i].addEventListener("change", e =>{
+		loadFlag(e.target); // calling loadFlag with passing target element as an argument
+	});
+}
+
+function loadFlag(element){
+	for(let code in country_list){
+		if(code == element.value){ // if currency code of country list is equal to option value
+			let imgTag = element.parentElement.querySelector("img"); // selecting img tag of particular drop list
+			// passing country code of a selected currency code in a img url
+			imgTag.src = `icons/flags-40x30/${country_list[code].toLowerCase()}.png`;
+		}
+	}
+}
+
+window.addEventListener("load", ()=>{
+	getExchangeRate();
+});
+
+getButton.addEventListener("click", e =>{
+	e.preventDefault(); //preventing form from submitting
+	getExchangeRate();
+});
+
+const exchangeIcon = document.querySelector("form .icon");
+exchangeIcon.addEventListener("click", ()=>{
+	let tempCode = fromCurrency.value; // temporary currency code of FROM drop list
+		fromCurrency.value = toCurrency.value; // passing TO currency code to FROM currency code
+		toCurrency.value = tempCode; // passing temporary currency code to TO currency code
+	loadFlag(fromCurrency); // calling loadFlag with passing select element (fromCurrency) of FROM
+	loadFlag(toCurrency); // calling loadFlag with passing select element (toCurrency) of TO
+	getExchangeRate(); // calling getExchangeRate
+})
+
+function getExchangeRate(){
+	const amount = document.querySelector("form input");
+	const exchangeRateTxt = document.querySelector("form .exchange-rate");
+	let amountVal = amount.value;
+	// if user don't enter any value or enter 0 then we'll put 1 value by default in the input field
+	if(amountVal == "" || amountVal == "0"){
+		amount.value = "1";
+		amountVal = 1;
+	}
+	exchangeRateTxt.innerText = "Getting exchange rate...";
+	let url = `https://v6.exchangerate-api.com/v6/0bfac520327c4a8ac8155e7f/latest/${fromCurrency.value}`;
+	// fetching api response and returning it with parsing into js obj and in another then method receiving that obj
+	fetch(url).then(response => response.json()).then(result =>{
+		let exchangeRate = result.conversion_rates[toCurrency.value]; // getting user selected TO currency rate
+		let totalExRate = (amountVal * exchangeRate).toFixed(2); // multiplying user entered value with selected TO currency rate
+		exchangeRateTxt.innerText = `${amountVal} ${fromCurrency.value} = ${totalExRate} ${toCurrency.value}`;
+	}).catch(() =>{ // if user is offline or any other error occured while fetching data then catch function will run
+		exchangeRateTxt.innerText = "Something went wrong";
+	});
+}
+</script -->
+

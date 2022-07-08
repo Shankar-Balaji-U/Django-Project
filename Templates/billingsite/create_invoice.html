@@ -1,0 +1,230 @@
+{% extends "base.html" %}
+{% load static widget_tweaks template_filter %}
+
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/inline-formset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/autocomplete.css' %}">
+{% endblock %}
+
+{% block content %}
+	<main class="pt-lg-3 pb-5 pt-0">
+		<div class="bg-light rounded container-xl container-fluid px-sm-3 px-md-5">
+			<form method="POST" autocomplete="off">
+				<div class="pt-md-5 pt-4 mb-4 d-md-flex row">
+					{% if form.errors or formset.non_form_errors %}
+						<div class="alert alert-danger" role="alert">
+							<strong>Please see below error.</strong>
+						</div>
+					{% endif %}
+					<div class="col-12">
+						<div class="row row-cols-1 row-cols-sm-2 g-3 g-lg-3 align-items-end">
+							<h1 id="content">Add Invoice</h1>
+							<div class="col col-sm-6 col-md-6 col-lg-6 col-xl-4 ms-auto my-auto me-auto me-sm-0">
+								<div class="input-group">
+									<input type="search" class="form-control {% if form.customer_id.errors %}is-invalid{% endif %}" id="search-customer" placeholder="Search customer" value="{{ temp.searched_mobile_no }}">
+									<button type="button" class="btn btn-blueberry rounded-end" id="search-customer-btn">
+										<i class="bi bi-arrow-clockwise"></i>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row row-cols-1 row-cols-lg-2 g-3 g-lg-3 m-auto">
+						<div class="col">
+							<div class="input-group">
+								<span class="input-group-text fw-bolder" id="invoice-addon">Invoice id</span>
+								<input id="invoiceid_id" class="form-control" type="text" placeholder="Auto set value" aria-label="Invoice ID" value="{{ form.instance.invoice_id }}" disabled>
+							</div>
+						</div>
+						<fieldset class="col">
+							<div class="input-group">
+								<span class="input-group-text fw-bolder" id="customerid-addon">Customer id</span>
+								<input type="number" name="customer_id" id="id_customer_id" class="form-control {% if form.customer_id.errors %}is-invalid rounded-end{% endif %}" value="{{ temp.customer_id }}" required readonly>
+								{% if form.customer_id.errors %}
+									<div class="invalid-feedback">{{ form.customer_id.errors }}</div>
+								{% endif %}
+							</div>
+						</fieldset>
+						<div class="col">
+							<div class="input-group">
+								<span class="input-group-text fw-bolder" id="industryname-addon">Shop name</span>
+								<input type="text" class="form-control" id="industryname_id" placeholder="Shop Name" value="{{ temp.industry_name }}" aria-label="Shop Name" aria-describedby="industryname-addon" disabled>
+							</div>
+						</div>
+						<div class="col">
+							<div class="input-group">
+								<span class="input-group-text fw-bolder" id="customername-addon">Customer name</span>
+								<input type="text" class="form-control" id="customername_id" placeholder="Customer Name" value="{{ temp.customer_name }}" aria-label="Customer Name" aria-describedby="customername-addon" disabled>
+							</div>
+						</div>
+						<div class="col">
+							<div class="input-group">
+								<span class="input-group-text fw-bolder" id="gstno-addon">GST no.</span>
+								<input type="text" class="form-control" id="gstno_id" placeholder="Goods and Services Tax Identification Number" value="{{ temp.gst_no }}" aria-label="GST No" aria-describedby="gstno-addon" disabled>
+							</div>
+						</div>
+						<div class="col">
+							<div class="input-group">
+								<span class="input-group-text fw-bolder" id="mobile_no-addon">Mobile no.</span>
+								<input type="text" class="form-control" id="mobileno_id" placeholder="+91-xxxxxxxxxx" value="{{ temp.mobile_no }}" aria-label="Mobile No" aria-describedby="mobile_no-addon" disabled>
+							</div>
+						</div>
+						<div class="col">
+							<div class="input-group">
+								<span class="input-group-text fw-bolder" id="customercreater-addon">Created date</span>
+								<input type="text" class="form-control" id="customercreated_id" placeholder="DD MMM YYYY" value="{{ temp.created_date }}" aria-label="Creater Date" aria-describedby="customercreater-addon" disabled>
+							</div>
+						</div>
+						<div class="col">
+							<div class="input-group">
+								<span class="input-group-text fw-bolder" id="pre_balance-addon">Previous balance</span>
+								<input type="text" class="form-control" id="prebalance_id" placeholder="Previous Balance" value="{{ temp.pre_bal }}" aria-label="Previous Balance" aria-describedby="pre_balance-addon" disabled>
+								<span class="input-group-text fw-bolder"><i class="fa-solid fa-indian-rupee-sign"></i></span>
+							</div>
+						</div>
+					</div>
+					<div class="mt-3 m-auto px-3">
+						<div class="input-group">
+							<span class="input-group-text fw-bolder" id="customer_address-addon">Customer address</span>
+							<textarea class="form-control" id="customeraddress_id" aria-label="Customer Address" aria-describedby="customer_address-addon" disabled style="height: 89px;"></textarea>
+						</div>
+					</div>
+				</div>
+	<fieldset>
+		<div class="text-dark py-4 table-responsive">
+			<div class="inline-formset inline-group" id="{{ formset.prefix }}-group" data-inline-type="tabular" 
+			data-inline-formset="{	
+									&quot;name&quot;: &quot;#{{ formset.prefix }}&quot;, 
+									&quot;options&quot;: {
+										&quot;prefix&quot;: &quot;{{ formset.prefix }}&quot;, 
+										&quot;addText&quot;: &quot;Add+&quot;, 
+										&quot;deleteText&quot;: &quot;<i class='bi bi-x'></i>&quot;, 
+										&quot;firstValuePrefix&quot;: &quot;{{ formset.form.item_quantity.name }}&quot;, 
+										&quot;secondValuePrefix&quot;: &quot;{{ formset.form.item_price.name }}&quot;, 
+										&quot;subTotalPrefix&quot;: &quot;{{ formset.form.item_subtotal.name }}&quot;, 
+										&quot;focusPrefix&quot;: &quot;{{ formset.form.item_name.name }}&quot;, 
+										&quot;formCssClass&quot;: &quot;dynamic-{{ formset.prefix }}&quot;, 
+										&quot;deleteInputId&quot;: &quot;#add-delete-input&quot;
+									}
+								}">
+				{% csrf_token %}
+				
+				<div class="tabular inline-related">
+					{{ formset.management_form }}
+					<table id="invoice-table" class="as-table table table-xl table-hover caption">
+						<div class="d-block invalid-feedback">{{ formset.non_form_errors }}</div>
+						<caption>Add list of items.</caption>
+						{% for form in formset.forms %}
+							{% if forloop.first %}
+								<thead class="text-light">
+									<tr class="text-center">
+										<th scope="col">#</th>
+										{% for field in form.visible_fields %}
+											<th scope="col">{{ field.label|capfirst }}</th>
+										{% endfor %}
+									</tr>
+								</thead>
+								<tbody>
+							{% endif %}
+							<tr scope="row" class="form-row" id="{{ formset.prefix }}-{{ forloop.counter0 }}">
+								<th class="original">
+									<div class="index">{{ forloop.counter1 }}</div>
+									{% for hidden in form.hidden_fields %}
+										{{ hidden }}
+									{% endfor %}
+								</th>
+								{% for field in form.visible_fields %}
+									<td class="field-{{ field.name }}">
+										{% if field.name != "DELETE" %}
+											{% if field.errors %}
+												{{ field|addCls:"is-invalid" }}
+											{% else %}
+												{{ field }}
+											{% endif %}
+											{% if field.errors %}
+												<div class="invalid-feedback">{{ field.errors }}</div>
+											{% endif %}
+										{% else %}
+											{{ field }}
+										{% endif %}
+									</td>
+								{% endfor %}
+							</tr>
+						{% endfor %}
+							<tr scope="row" class="form-row empty-row" id="{{ formset.prefix }}-empty">
+								<th class="original">
+									<div class="index">__prefix__</div>
+									{% for field in formset.empty_form.hidden_fields %}
+										{{ field }}
+									{% endfor %}
+								</th>
+								{% for field in formset.empty_form.visible_fields %}
+									<td class="field-{{ field.name }}">
+										{% if field.name != "DELETE" %}
+											{{ field }}
+										{% endif %}
+									</td>
+								{% endfor %}
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</fieldset>
+				<div class="col-12 d-flex pb-md-5 pb-4">
+					<button type="submit" class="btn btn-success ms-auto">Submit</button>
+				</div>
+			</form>
+		</div>
+	<!--Container Main end-->
+	</main>
+
+{% endblock %}
+
+{% block jscript %}
+	<script type="text/javascript" src="{% static 'javascript/jquery-ui.js' %}"></script>
+	<script type="text/javascript" src="{% static 'javascript/auto-complete.js' %}"></script>
+	<script type="text/javascript" src="{% static 'javascript/insert-customerid-to-form.js' %}"></script>
+	<script type="text/javascript">
+		const url1 = "{% url 'CustomerMobileList' %}";
+		var dict = getMobileNumberList(url1);
+		autocomplete(document.getElementById("search-customer"), dict["mobile_no"]);
+
+
+		$('#search-customer-btn').click(() => {
+			var customer_no =  $('#search-customer').val();
+			$("#gstno_id, #mobileno_id, #customername_id, #prebalance_id, #customercreated_id, #industryname_id").each(function() {
+				$(this).val('');
+			});
+			$("#id_customer_id").val(0);
+
+			if (customer_no != "") {
+				const url = `{% url 'CustomerData' %}?mobile_no=${customer_no}`;
+				var id, pending, cdate, gst, mobile, name, shop, dataDict;
+				dataDict = getCustomerData(url, customer_no);
+				id = dataDict["id"];
+				pending = dataDict["pending"];
+				cdate = dataDict["creater_date"];
+				shop = dataDict["industryname"];
+				gst = dataDict["gst_id"];
+				mobile = dataDict["mobile_no"];
+				name = dataDict["customer_name"];
+
+				$("#gstno_id").val(gst);
+				$("#mobileno_id").val(mobile);
+				$("#id_customer_id").val(id);
+				$("#customername_id").val(name);
+				$("#prebalance_id").val(pending);
+				$("#customercreated_id").val(cdate);
+				$("#industryname_id").val(shop);
+			}
+		});
+	</script>
+	<script type="text/javascript" src="{% static 'javascript/jquery-inline.js' %}"></script>
+{% endblock %}
+	<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+    integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script> -->
+    {% if field.errors %}s{% endif %}

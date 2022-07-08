@@ -1,0 +1,9 @@
+#invoice-table thead th:nth-child(2) {
+  min-width: 17vmax!important;
+}
+#invoice-table thead th:nth-child(3) {
+  min-width: 8vmax!important;
+}
+#invoice-table thead th:nth-child(4) {
+  min-width: 6vmax!important;
+}
