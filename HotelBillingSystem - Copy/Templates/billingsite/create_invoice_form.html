@@ -1,0 +1,44 @@
+{% load template_filter %}
+					<div class="row row-cols-1 row-cols-lg-2 g-3 g-lg-3 mx-0">
+						<div class="col">
+							<div class="input-group">
+								<span class="input-group-text fw-bolder" id="invoice-addon">Invoice ID</span>
+								<input id="invoiceid_id" class="form-control" type="text" placeholder="Auto set value" aria-label="Invoice ID" value="{{ form.instance.invoice_id }}" disabled>
+							</div>
+						</div>
+						<div class="col">
+							<div class="input-group">
+								<label for="{{ form.customer_id.id_for_label }}" class="input-group-text fw-bolder">
+									{{ form.customer_id.label }}
+								</label>
+								{% if form.customer_id.errors %}
+									{{ form.customer_id|add_class:"is-invalid" }}
+								{% else %}
+									{{ form.customer_id }}
+								{% endif %}
+							</div>
+						</div>
+						{% for field in form %}
+							{% if field.name != "temp_search_bar" and field.name|is_temp %}
+							<div class="col">
+								<div class="input-group">
+									<label for="{{ field.id_for_label }}" class="input-group-text fw-bolder">
+										{{ field.label }}
+									</label>
+									{{ field }}
+									{% if field.name == "pre_balance" %}
+										<span class="input-group-text fw-bolder">
+											<i class="fa-solid fa-indian-rupee-sign"></i>
+										</span>
+									{% endif %}
+								</div>
+							</div>
+							{% endif %}
+						{% endfor %}
+					</div>
+					<div class="mt-3 px-2">
+						<div class="input-group">
+							<span class="input-group-text fw-bolder" id="customer_address-addon">Customer address</span>
+							<textarea class="form-control" id="customeraddress_id" aria-label="Customer Address" aria-describedby="customer_address-addon" disabled style="height: 89px;"></textarea>
+						</div>
+					</div>

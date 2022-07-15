@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css %}{% endblock %}
+
+{% block content %}
+	<main class="container-fluid container-md m-auto px-0 pt-sm-5">
+		<div class="p-sm-4">
+			<div class="card overflow-hidden">
+				<div class="row border-light">
+					<div class="col-md-3 pt-0">
+						<div class="list-group list-group-flush flex-column" id="all-settings" role="tablist" aria-orientation="vertical">
+							<button class="list-group-item list-group-item-action" id="general-settings-btn" data-bs-toggle="tab" data-bs-target="#general-settings-tab" type="button" role="tab" aria-controls="general-settings" aria-selected="true">General</button>
+							<button class="list-group-item list-group-item-action" id="change-password-btn" data-bs-toggle="tab" data-bs-target="#change-password-tab" type="button" role="tab" aria-controls="change-password" aria-selected="false">Change password</button>
+							<button class="list-group-item list-group-item-action" id="more-info-btn" data-bs-toggle="tab" data-bs-target="#more-info-tab" type="button" role="tab" aria-controls="more-info" aria-selected="false">More info</button>
+							<button class="list-group-item list-group-item-action" id="notifications-btn" data-bs-toggle="tab" data-bs-target="#notifications-tab" type="button" role="tab" aria-controls="notifications" aria-selected="false">Notifications</button>
+						</div>
+					</div>
+					<div class="col-md-9">
+						<div class="tab-content">
+							<div class="tab-pane fade" id="general-settings-tab" role="tabpanel" aria-labelledby="general-settings-btn">
+								<div class="card-body align-items-center">
+									<div class="d-flex">
+										<div class="flex-shrink-0">
+											<img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-thumbnail profile-img" alt="Profile image">
+										</div>
+										<div class="flex-grow-1 ms-4">
+											<div class="input-group mb-3">
+												<input type="file" class="form-control" id="inputGroupFile01">
+												<a href="{% url 'ChangeProfile' request.user.pk %}?reset=avatar" class="btn btn-outline-secondary">Reset</a>
+											</div>
+											<div class="text-secondary small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
+										</div>
+									</div>
+								</div>
+								<hr class="mx-2 my-0">
+								<div class="card-body">
+					    			<div class="form-group">
+					    				<label class="form-label">Username</label>
+					    				<input type="text" class="form-control mb-1" value="nmaxwell">
+					    			</div>
+					    			<div class="form-group">
+					    				<label class="form-label">Name</label>
+					    				<input type="text" class="form-control" value="Nelle Maxwell">
+					    			</div>
+					    			<div class="form-group">
+					    				<label class="form-label">E-mail</label>
+					    				<input type="text" class="form-control mb-1" value="nmaxwell@mail.com">
+					    				<div class="alert alert-warning mt-3"> Your email is not confirmed. Please check your inbox.<br>
+					    					<a href="#">Resend confirmation</a>
+					    				</div>
+					    			</div>
+					    			<div class="form-group">
+					    				<label class="form-label">Company</label>
+					    				<input type="text" class="form-control" value="Company Ltd.">
+					    			</div>
+					    		</div>
+								{% comment %}
+					    		<div class="card-body model align-items-center">
+					    			<img src="https://bootdey.com/img/Content/avatar/avatar1.png" class="img-thumbnail" alt="Profile image">
+					    			<img src="" alt="" class="d-block ui-w-80">
+					    			<div class="model-body ml-4">
+					    				<input type="file" class="btn btn-outline-primary">
+					    				<div class="text-light small mt-1">Allowed JPG, GIF or PNG. Max size of 800K</div>
+					    			</div>
+					    		</div>
+					    		<hr class="border-light m-0">
+					    		<div class="card-body">
+					    			<div class="form-group">
+					    				<label class="form-label">Username</label>
+					    				<input type="text" class="form-control mb-1" value="nmaxwell">
+					    			</div>
+					    			<div class="form-group">
+					    				<label class="form-label">Name</label>
+					    				<input type="text" class="form-control" value="Nelle Maxwell">
+					    			</div>
+					    			<div class="form-group">
+					    				<label class="form-label">E-mail</label>
+					    				<input type="text" class="form-control mb-1" value="nmaxwell@mail.com">
+					    				<div class="alert alert-warning mt-3"> Your email is not confirmed. Please check your inbox.<br>
+					    					<a href="javascript:void(0)">Resend confirmation</a>
+					    				</div>
+					    			</div>
+					    			<div class="form-group">
+					    				<label class="form-label">Company</label>
+					    				<input type="text" class="form-control" value="Company Ltd.">
+					    			</div>
+					    		</div>
+								{% endcomment %}
+
+					    	</div>
+					    	<div class="tab-pane fade" id="change-password-tab" role="tabpanel" aria-labelledby="change-password-tab">
+					    		<div class="card-body pb-2">
+					    			<div class="form-group">
+					    				<label class="form-label">Current password</label>
+					    				<input type="password" class="form-control">
+					    			</div>
+					    			<div class="form-group">
+					    				<label class="form-label">New password</label>
+					    				<input type="password" class="form-control">
+					    			</div>
+					    			<div class="form-group">
+					    				<label class="form-label">Repeat new password</label>
+					    				<input type="password" class="form-control">
+					    			</div>
+					    			<div class="form-group">
+					    				<label class="form-label">Repeat new password</label>
+					    				<button class="btn btn-outline-primary">Submit</button>
+					    			</div>
+					    		</div>
+					    	</div>
+					    	<div class="tab-pane fade" id="more-info-tab" role="tabpanel" aria-labelledby="more-info-btn">...</div>
+					    	<div class="tab-pane fade" id="notifications-tab" role="tabpanel" aria-labelledby="notifications-btn">...</div>
+					    </div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+{% endblock %}
+{% block jscript %}
+<script type="text/javascript">
+ 		const ACTIVATE_INITIAL_ID = 'general-settings-btn';
+		var settingsTab = [].slice.call(document.querySelectorAll('#all-settings button'));
+		settingsTab.forEach(function (element) {
+			var triggerTab = new bootstrap.Tab(element);
+			var active_tab_id = sessionStorage.getItem('active_tab');
+			element.addEventListener('click', function (event) {
+				event.preventDefault();
+				triggerTab.show();
+				sessionStorage.setItem('active_tab', this.id);
+			console.log(this.id)
+			});
+			if (active_tab_id) {
+				if (element.id == active_tab_id) {
+					triggerTab.show();
+				}
+			} 
+			else {
+				let initial_element = document.getElementById(ACTIVATE_INITIAL_ID);
+				var triggerTab = new bootstrap.Tab(initial_element);
+				triggerTab.show();
+			}
+		});
+ 
+</script>
+{% endblock %}
+
+
+

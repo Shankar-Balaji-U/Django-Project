@@ -1,0 +1,62 @@
+:root {
+	--a4-paper-width: 21cm;
+	--a4-paper-height: 29.7cm;
+
+	--a4-margin-normal: 2.54cm;
+	--a4-margin-narrow: 1.27cm;
+	--a4-margin-moderate: 2.54cm 1.91cm;
+}
+
+
+.page {
+	width: var(--a4-paper-width);
+	/*min-height: var(--a4-paper-height);*/
+	/*padding: var(--a4-margin-narrow);*/
+	margin: 100px auto;
+	/*border: 0px #D3D3D3 solid;*/
+	/*border-radius: 5px;*/
+	/*box-shadow: 0 0 8px 3px rgb(0 0 0 / 10%);*/
+}
+/*
+.innerpage {
+	padding: .45cm;
+	border: 2px darkslategray solid;
+	border-radius: 3px;
+
+	height: calc(var(--a4-paper-height) - calc(var(--a4-margin-narrow) * 2) - .49px);*/				/* .49px causes a small change in last page to remove */
+	/*outline: var(--a4-margin-narrow) #ffffff00 solid;
+}
+
+.page:first-child {
+	margin-top: 100px;
+}
+
+.page-no {
+	position: relative;
+	left: 7px;
+	float: right;
+	top: 10px;
+}
+*/
+@page {
+	size: A4;
+	margin: 0;
+}
+
+@media print {
+	#header {
+		display: none;
+	}
+	.page {
+		width: fit-content;!important;
+		margin: 0;
+		border-radius: none!important;
+		box-shadow: none!important;
+						/*page-break-after: inherit;*/
+	}
+
+	main {
+		padding: none!important;
+	}
+}
+

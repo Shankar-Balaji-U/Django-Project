@@ -1,0 +1,23 @@
+// roperty: backdrop-filter,
+// 			// class: glossy,
+// 			// values: (
+// 			// 	1: blur(1px),
+// 			// 	2: blur(2px),
+// 			// 	3: blur(3px),
+// 			// 	4: blur(4px),
+// 			// 	5: blur(5px),
+@mixin glossy-variant($color) {
+  background: rgba($color, .5);
+}
+
+@for $i from 1 through 50 {
+  .glossy-#{$i} {
+    backdrop-filter: blur(#{$i}px);
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .glossy-#{$color} {
+    @include glossy-variant($value);
+  }
+}

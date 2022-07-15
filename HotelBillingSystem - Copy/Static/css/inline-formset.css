@@ -1,0 +1,74 @@
+/* ###################### Start Inline formset CSS ################### */
+ 
+.empty-row {
+	display: none;
+}
+
+ul.errorlist {
+    margin: 0 0 4px;
+    padding: 0;
+}
+
+ul.errorlist li {
+    font-size: 13px;
+    text-align: left;
+    display: block;
+    margin-bottom: 4px;
+    overflow-wrap: break-word;
+}
+
+ul.errorlist li:first-child {
+    margin-top: 0;
+}
+
+td ul.errorlist {
+    margin: 0;
+    padding: 0;
+}
+
+td ul.errorlist li {
+    margin: 0;
+}
+
+/*@media (max-width: 576px) {
+	#invoice-table {
+		transform: scale(.7);
+	}
+}*/
+
+
+#invoice-table thead th:nth-child(1) {
+	min-width: 10px;
+}
+#invoice-table thead th:nth-child(2) {
+    min-width: 200px;
+}
+#invoice-table thead th:nth-child(3) {
+    min-width: 200px;
+}
+#invoice-table thead th:nth-child(4) {
+    min-width: 170px;
+}
+#invoice-table thead th:nth-child(5) {
+    min-width: 160px;
+}
+
+#invoice-table tbody tr th, .index {
+	text-align: center;
+}
+
+
+/* ###################### End Inline formset CSS ################### */
+
+.field-DELETE {
+	align-content: center;
+	vertical-align: middle;
+}
+
+i.bi.bi-x::before{
+	transform: scale(2);
+}
+
+.inline-deletelink {
+	padding-top: .35rem;
+}

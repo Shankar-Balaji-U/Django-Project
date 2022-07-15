@@ -1,0 +1,54 @@
+// $body-bg: 			opaque($pink-100, rgba(248, 249, 250, .9));
+$body-bg: 			hsl(0, 5%, 95%);
+
+// Return opaque color
+// // opaque(#fff, rgba(0, 0, 0, .5)) => #808080
+// @function opaque($background, $foreground) {
+//   @return mix(rgba($foreground, 1), $background, opacity($foreground) * 100);
+// }
+
+
+$primary:       opaque($indigo, rgba(49, 130, 102, .5));
+$secondary:     $gray-600;
+$success:       $green-500;
+$info:          $cyan;
+$warning:       $yellow-400;
+$danger:        $red-500;
+$light:         $gray-100;
+$dark:          $gray-900;
+
+$cream: shade-color($orange-200, 15%);
+
+// #4b49ac
+$theme-colors: (
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark
+);
+
+// Create your own map
+$custom-colors: (
+	"creamy":      $cream,
+  "blueberry":  #8113B3,
+  "navy":       #113A57,
+  "brown":      #8C5C59,
+  "darkcherry": #5E0344,
+
+
+  "purplish":     #9881F5,
+  "tealish":      #82AFF9,
+  "reddish":      #FE7B7C,
+  "purble":       #5050b2,
+  "yellowish":    #F9D08B,
+);
+// hsl(252deg 85% 73%)
+
+
+
+// Merge the maps
+$theme-colors: map-merge($theme-colors, $custom-colors);

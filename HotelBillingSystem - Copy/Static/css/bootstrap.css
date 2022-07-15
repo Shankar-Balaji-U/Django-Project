@@ -1,0 +1,19 @@
+.f0{
+    font-size:2rem
+}
+@media (min-width: 520px){
+    .f0{
+        font-size:3rem
+    }
+}
+.f3{
+    font-size:1.25rem
+}
+@media (min-width: 520px){
+    .f3{
+        font-size:1.5rem
+    }
+}
+.f5{
+    font-size:1rem
+}

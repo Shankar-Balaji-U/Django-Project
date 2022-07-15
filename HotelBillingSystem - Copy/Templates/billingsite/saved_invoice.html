@@ -1,0 +1,127 @@
+{% extends "base.html" %}
+{% load static widget_tweaks%}
+
+
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="{% static 'css/paper-sheet.css' %}">
+{% endblock %}
+
+
+{% block content %}
+<main class="page p-5 mx-auto shadow rounded bg-light">
+	<div class="row justify-content-between gx-3 px-2 mb-3">
+		<div class="col-6">
+			<div class="p-2">
+				<h1 id="content">Invoice</h1>
+				<a class="btn btn-light btn-sm" href="{% url 'EditInvoice' object.pk %}">Modify</a>
+				<div class="row">
+					<div class="col-5"><strong>#Invoice id</strong></div>
+					<div class="col">{{ object.invoice_id }}</div>
+				</div>
+				<div class="row">
+					<div class="col-5"><strong>Invoice date</strong></div>
+					<div class="col">{{ object.created_date|date:"D, d M Y" }}</div>
+				</div>
+				<div class="row">
+					<div class="col-5"><strong>Invoice time</strong></div>
+					<div class="col">{{ object.created_time|time:"H:i A" }}</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-4">
+			<div class="p-2">
+				<h4>Logo</h4>
+			</div>
+		</div>
+	</div>
+
+	<div class="px-2 row gx-3 mb-3">
+		<div class="col">
+			<div class="p-2 rounded bg-bluelight" style="background-color:#e8f0fd">
+				<h4>Billed by</h4>
+				<strong>Supplier Name</strong>
+				<p>46, Rajiv Gandhiji street, maran salai, Mountroad, Chennai - 600001</p>
+				<div class="row">
+					<div class="col-3"><strong>GSTIN</strong></div>
+					<div class="col">AD99D045000AED0</div>
+				</div>
+				<!-- <div class="row">
+					<div class="col-3"><strong>PAN</strong></div>
+					<div class="col">AD99D045000AED0</div>
+				</div> -->
+			</div>
+		</div>
+		<div class="col">
+			<div class="p-2 rounded bg-bluelight">
+				<h4>Billed for</h4>
+				<strong>{{ object.customer_id.name }}</strong>
+				<p>46, Rajiv Gandhiji street, maran salai, Mountroad, Chennai - 600001</p>
+				<div class="row">
+					<div class="col-3"><strong>GSTIN</strong></div>
+					<div class="col">{{ object.customer_id.goods_tax_id }}</div>
+				</div>
+				<!-- <div class="row">
+					<div class="col-3"><strong>PAN</strong></div>
+					<div class="col">AD99D045000AED0</div>
+				</div> -->
+			</div>
+		</div>
+	</div>
+	<!-- <div class="bg-light rounded shadow container-fluid container-xl px-md-5 px-sm-3">dfd -->
+	<div class="table-responsive">
+		<table id="invoice-table-saved" class="table table-sm table-hover caption as-table">
+			<caption>List of users</caption>
+			{% for i in object.invoiceitem_set.all %}
+				{% if forloop.first %}
+					<thead class="text-light">
+						<tr>
+							<th scope="col">#</th>
+							<th scope="col">Food Name</th>
+							<th scope="col">item Quantity</th>
+							<th scope="col">item rate</th>
+							<th scope="col">Sub Total</th>
+						</tr>
+					</thead>
+					<tbody>
+				{% endif %}
+					<tr>
+						<th scope="row">{{ forloop.counter }}</th>
+						<td>
+							<div class="input-group-sm">
+								{{i.item_name}}
+							</div>
+						</td>
+						<td>
+							<div class="input-group-sm">
+								{{i.item_quantity}}
+							</div>
+						</td>
+						<td>
+							<div class="input-group-sm">
+								{{i.item_price}}
+							</div>
+						</td>
+						<td>
+							<div class="input-group-sm">
+								{{i.item_subtotal}}
+							</div>
+						</td>
+					</tr>
+				{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<td></td>
+					<td colspan="2">Total Amount</td>
+					<td colspan="2">
+						<div class="input-group-sm">
+							{{ object.total_amount }}
+						</div>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+</main>
+
+{% endblock %}
